@@ -1,11 +1,19 @@
 
-def prem_fonc():
-    return 10
+import csv
+import requests
+import app.src.base_donnees.data as database
+
+piscines = requests.get(
+    "https://data.montreal.ca/dataset/4604afb7-a7c4-4626-a3ca-e136158133f2/resource/cbdca706-569e-4b4a-805d-9af73af03b14/download/piscines.csv").content.decode('utf-8')
+# patinoires = requests.get(
+# "https://data.montreal.ca/dataset/225ac315-49fe-476f-95bd-a1ce1648a98c/resource/5d1859cc-2060-4def-903f-db24408bacd0/download/l29-patinoire.xml")
+glissades = requests.get(
+    "http://www2.ville.montreal.qc.ca/services_citoyens/pdf_transfert/L29_GLISSADE.xml")
 
 
-def deux_fonc(mlt):
-    return 200 * mlt
-
-
-def trois_fonc(mlt, unit):
-    return mlt * unit
+def ajouter_piscine():
+    cr = csv.reader(piscines.splitlines(), delimiter=',')
+    toutes_piscines = list(cr)
+    toutes_piscines[1][7] = toutes_piscines[1][7].replace(",", ".")
+    print(toutes_piscines[1][7])
+    database.ajouter_piscine(toutes_piscines[1])
