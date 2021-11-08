@@ -13,7 +13,7 @@ db = SQLAlchemy(app)
 @app.route("/")
 def accueil():
 
-    serv.ajouter_piscine()
+    serv.lireSite()
     return render_template("accueil.html")
 
 

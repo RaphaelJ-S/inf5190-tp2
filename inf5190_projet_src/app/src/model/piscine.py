@@ -1,5 +1,4 @@
 from app.src.app import db
-db.create_all()
 
 
 class Piscine(db.Model):
