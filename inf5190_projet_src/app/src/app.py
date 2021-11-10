@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 
 @app.before_first_request
 def initialiser_planificateur():
-    planificateur = Planificateur(60, Scraper())
+    planificateur = Planificateur(10, Scraper())
     planificateur.run()
 
 
