@@ -1,5 +1,4 @@
 
-from app.src.planificateur.scraper import Scraper
 import app.src.db.data as database
 
 

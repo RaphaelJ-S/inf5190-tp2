@@ -1,5 +1,6 @@
 from app.src.app import db
 from app.src.model.piscine import Piscine
+from app.src.model.source import Source
 
 
 def ajouter_piscine(piscine: list[str]):
@@ -19,4 +20,8 @@ def ajouter_piscine(piscine: list[str]):
     db.session.commit()
 
 
-db.create_all()
+def get_sources() -> list[Source]:
+    return Source.query.all()
+
+
+# get_db().create_all()

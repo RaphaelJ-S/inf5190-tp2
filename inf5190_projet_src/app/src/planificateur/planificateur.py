@@ -1,15 +1,15 @@
 from apscheduler.schedulers.background import BackgroundScheduler
-from app.src.planificateur.scraper import Scraper
+from app.src.planificateur.telechargeur import Telechargeur
 import atexit
 
 
 class Planificateur:
 
-    def __init__(self, frequence: int, scraper: Scraper):
+    def __init__(self, frequence: int, telechargeur: Telechargeur):
         self.frequence = frequence
-        self.scraper = scraper
+        self.telechargeur = telechargeur
         self.travail = BackgroundScheduler(
-            timezone="EST", max_instance=1)
+            timezone="Canada/Eastern", max_instance=1)
 
     def run(self):
         self.travail.add_job(self.lireSites, 'interval',
@@ -20,4 +20,4 @@ class Planificateur:
     def lireSites(self):
         print(
             f"Le travail de téléchargement à interval de {self.frequence} secondes commence.\n\n")
-        self.scraper.start()
+        self.telechargeur.start()
