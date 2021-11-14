@@ -1,13 +1,15 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from app.src.planificateur.telechargeur import Telechargeur
 import atexit
+import app.src.db.data as database
 
 
 class Planificateur:
 
-    def __init__(self, frequence: int, telechargeur: Telechargeur):
+    def __init__(self, frequence: int):
         self.frequence = frequence
-        self.telechargeur = telechargeur
+        self.sources = database.get_sources()
+        self.telechargeur = Telechargeur(self.sources)
         self.travail = BackgroundScheduler(
             timezone="Canada/Eastern", max_instance=1)
 
@@ -20,4 +22,5 @@ class Planificateur:
     def lireSites(self):
         print(
             f"Le travail de téléchargement à interval de {self.frequence} secondes commence.\n\n")
-        self.telechargeur.start()
+        nv_donnees = self.telechargeur.start()
+        print(nv_donnees)

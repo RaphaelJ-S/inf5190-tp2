@@ -12,13 +12,12 @@ db = SQLAlchemy(app)
 # doit être importé pour ne pas causer d'importation circulaire
 import app.src.db.data as database
 from app.src.planificateur.planificateur import Planificateur
-from app.src.planificateur.telechargeur import Telechargeur
 import app.src.service.service as serv
 
 
 @app.before_first_request
 def initialiser_planificateur():
-    planificateur = Planificateur(10, Telechargeur())
+    planificateur = Planificateur(20)
     planificateur.run()
 
 
