@@ -1,6 +1,4 @@
 
-import app.src.db.data as database
-
 
 def ajouter_piscine():
     toutes_piscines = list(cr)

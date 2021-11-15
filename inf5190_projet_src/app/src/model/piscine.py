@@ -1,4 +1,4 @@
-from app.src.app import db
+from app.src.db.init_db import db
 
 
 class Piscine(db.Model):
@@ -15,3 +15,5 @@ class Piscine(db.Model):
     equipement = db.Column(db.String(50))
     longitude = db.Column(db.Float(6), nullable=False)
     latitude = db.Column(db.Float(6), nullable=False)
+    arrondissement = db.Column(db.String(50), db.ForeignKey(
+        "arr_piscine.nom"), nullable=True, default="Montréal")

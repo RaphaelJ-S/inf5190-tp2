@@ -1,9 +1,8 @@
 from typing import Protocol
-
 from requests.models import Response
+
 from app.src.planificateur.parser.glissade_parser import Glissade_Parser
 from app.src.planificateur.parser.patinoire_parser import Patinoire_Parser
-
 from app.src.planificateur.parser.piscine_parser import Piscine_Parser
 
 

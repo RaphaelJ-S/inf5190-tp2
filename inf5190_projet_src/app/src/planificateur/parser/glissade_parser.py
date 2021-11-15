@@ -10,14 +10,16 @@ class Glissade_Parser:
         glissades = []
         for elem in tree.findall("glissade"):
             glissade = []
-            glissade.append(elem.find("nom").text)
             glissade.append(elem.find("ouvert").text)
             glissade.append(elem.find("deblaye").text)
+            glissade.append(elem.find("nom").text)
 
             arrondissement = elem.find("arrondissement")
-            glissade.append(arrondissement.find("nom_arr").text)
             glissade.append(arrondissement.find("cle").text)
             glissade.append(arrondissement.find("date_maj").text)
+            glissade.append(arrondissement.find(
+                "nom_arr").text.replace(" - ", ""))
+
             glissades.append(glissade)
 
         return glissades
