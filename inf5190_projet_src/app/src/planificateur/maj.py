@@ -1,5 +1,3 @@
-
-
 from app.src.db.base_donnees import Base_Donnees
 
 

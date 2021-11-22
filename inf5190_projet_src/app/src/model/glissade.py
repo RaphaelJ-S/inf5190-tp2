@@ -1,4 +1,3 @@
-from re import A
 from app.src.db.init_db import db
 
 

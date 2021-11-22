@@ -1,9 +1,9 @@
 
 import requests
-from pytz import timezone, UTC
 from datetime import datetime
 from requests.models import Response
 
+from app.src.util.dates import convertir_str_vers_date_ET_avec_offset
 from app.src.model.source import Source
 from app.src.planificateur.parser.parser import Parser, definir_parser
 
@@ -30,15 +30,9 @@ class Telechargeur:
     def _a_nouvelles_donnees(self,
                              raw: Response,
                              date_modif: datetime) -> bool:
-        dern_modif = self._convertir_string_vers_date(
+        dern_modif = convertir_str_vers_date_ET_avec_offset(
             raw.headers["Last-Modified"])
         return date_modif < dern_modif
-
-    def _convertir_string_vers_date(self, date: str) -> datetime:
-        est_timezone = timezone("Canada/Eastern")
-        str_date = datetime.strptime(
-            date, "%a, %d %b %Y %H:%M:%S %Z")
-        return str_date.astimezone(UTC).astimezone(est_timezone)
 
     def start(self):
         donnees = {}

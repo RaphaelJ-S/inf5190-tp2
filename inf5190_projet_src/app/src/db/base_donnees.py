@@ -1,7 +1,6 @@
 
-from datetime import datetime
-from pytz import timezone
 
+from app.src.util.dates import now_ET_avec_offset
 from app.src.model.piscine import Piscine
 from app.src.model.source import Source
 from app.src.model.glissade import Glissade
@@ -127,11 +126,10 @@ class Base_Donnees():
             self.db.session.commit()
 
     def maj_date_sources(self, nom_tables: list[str]):
-        est_timezone = timezone("Canada/Eastern")
         with self.app.app_context():
             for nom in nom_tables:
                 Source.query.filter_by(
                     parser=nom).update(dict(date_modif=str(
-                        datetime.utcnow().astimezone(est_timezone))))
+                        now_ET_avec_offset())))
 
             self.db.session.commit()
