@@ -42,6 +42,11 @@ def accueil():
     return render_template("accueil.html")
 
 
+@app.route("/doc")
+def documentation():
+    return render_template("documentation.html")
+
+
 def main():
     creer_app()
     app.run(host="0.0.0.0", port=5000)

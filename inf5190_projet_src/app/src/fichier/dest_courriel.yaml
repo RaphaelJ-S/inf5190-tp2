@@ -1,0 +1,9 @@
+- nom: Raphael
+  email: raphy.inf5190.labo@gmail.com
+  liste_arr:
+    - Lasalle
+    - Verdun
+- nom: Chose
+  email: invalide.chose@gmail.com
+  liste_arr:
+    - St-Laurent

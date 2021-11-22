@@ -16,7 +16,7 @@ class Planificateur:
 
     def run(self):
         self.travail.add_job(
-            self.lireSites, 'cron', hour=24
+            self.lireSites, 'cron', hour=0
         ) if self.frequence is None else self.travail.add_job(
             self.lireSites, 'interval', seconds=self.frequence
         )
