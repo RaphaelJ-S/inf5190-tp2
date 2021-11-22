@@ -5,7 +5,8 @@ import xml.etree.ElementTree as ET
 class Patinoire_Parser:
 
     def parse(self, donnees: Response):
-        content = donnees.content
+
+        content = donnees.content.decode(donnees.apparent_encoding)
         tree = ET.fromstring(content)
         patinoires = []
         for arrondissement in tree.findall("arrondissement"):
@@ -24,7 +25,7 @@ class Patinoire_Parser:
                     curr_condition.find("arrose").text.strip())
                 spec_patinoire.append(
                     curr_condition.find("resurface").text.strip())
-                spec_patinoire.append(nom_arr.replace(" - ", ""))
+                spec_patinoire.append(nom_arr.replace(" - ", "–"))
 
                 patinoires.append(spec_patinoire)
         return patinoires

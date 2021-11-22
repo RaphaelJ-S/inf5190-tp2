@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 class Glissade_Parser:
 
     def parse(self, donnees: Response):
-        content = donnees.content
+        content = donnees.content.decode(donnees.apparent_encoding)
         tree = ET.fromstring(content)
         glissades = []
         for elem in tree.findall("glissade"):
@@ -18,7 +18,7 @@ class Glissade_Parser:
             glissade.append(arrondissement.find("cle").text)
             glissade.append(arrondissement.find("date_maj").text)
             glissade.append(arrondissement.find(
-                "nom_arr").text.replace(" - ", ""))
+                "nom_arr").text.replace(" - ", "–"))
 
             glissades.append(glissade)
 

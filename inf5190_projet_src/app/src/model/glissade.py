@@ -9,5 +9,10 @@ class Glissade(db.Model):
     deblaye = db.Column(db.String(1), nullable=False)
     cle = db.Column(db.String(10), nullable=False)
     date_maj = db.Column(db.String(30), nullable=False)
-    arrondissement = db.Column(db.String(50), db.ForeignKey(
-        "arr_glissade.nom"), nullable=True, default="Montréal")
+    nom_arr = db.Column(db.String(50), db.ForeignKey(
+        "arrondissement.nom", ondelete="CASCADE"),
+        nullable=True, default="N/A")
+
+    def as_partial_list(self) -> list[str]:
+        return [self.ouvert, self.deblaye, self.nom, self.cle, self.date_maj,
+                self.nom_arr]

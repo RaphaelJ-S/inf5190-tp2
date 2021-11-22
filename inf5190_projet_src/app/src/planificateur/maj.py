@@ -10,14 +10,17 @@ class MAJ:
     def _maj_dates(self, nv_donnees: dict):
         self.db.maj_date_sources(list(nv_donnees))
 
-    def _trouver_diff_installations(self, nv_donnees: dict):
+    def trouver_diff_installations(self, nv_donnees: dict):
         nom_tables = list(nv_donnees)
-        print(nv_donnees)
+        changements = {}
         for nom in nom_tables:
             anc_donnees = self._get_anciennes_donnees(nom)
-            diff = self._diff_installation(list(anc_donnees), nv_donnees[nom])
+            diff = self._diff_installation(
+                anc_donnees, nv_donnees[nom])
+            changements[nom] = diff
+        return changements
 
-    def _get_anciennes_donnees(self, nom: str) -> list:
+    def _get_anciennes_donnees(self, nom: str) -> list[list[str]]:
         return {
             "piscine": self.db.get_piscines(),
             "glissade": self.db.get_glissades(),
@@ -25,7 +28,7 @@ class MAJ:
         }.get(nom, None)
 
     def _diff_installation(self,
-                           anc_donnees: list[list[str]],
+                           anc_donnees: list,
                            nv_donnees: list[list[str]]
                            ) -> tuple[list[list[str]]]:
         modif = []
@@ -33,7 +36,7 @@ class MAJ:
         i = 0
         delta = 0
         while i < range_i:
-            curr_donnees = anc_donnees[i]
+            curr_donnees = anc_donnees[i].as_partial_list()
             for y in range(len(nv_donnees)):
                 if curr_donnees[2] == nv_donnees[y][2]:  # le nom est le même
                     # S'il y a des différences dans les données
@@ -55,11 +58,27 @@ class MAJ:
         nv_donnees.pop(index_y)
         return 1
 
-    def _operations_suppression(self, supp: list[list[str]]):
-        return print("Suppression : " + supp)
+    def effectuer_changements(self, a_effectuer: dict[str, tuple[list[list[str]]]]):
+        liste_nom_table = list(a_effectuer)
+        for nom in liste_nom_table:
+            self.operations_ajout(a_effectuer[nom][0], nom)
+            # Ces fonctionnalités ne font pas partie du TP mais elle sont
+            # gardées pour développement futur
+            self.operations_suppression(a_effectuer[nom][1], nom)
+            self.operations_modification(a_effectuer[nom][2], nom)
 
-    def _operations_modification(self, modif: list[list[str]]):
-        return print("Modification : " + modif)
+        self.db.maj_date_sources(liste_nom_table)
 
-    def _operations_ajout(self, ajout: list[list[str]]):
-        return print("Ajout : " + print(ajout))
+    def operations_suppression(self, supp: list[list[str]], table: str):
+        return  # print("Suppression dans " + table + " : " + str(supp))
+
+    def operations_modification(self, modif: list[list[str]], table: str):
+        return  # print("Modification dans " + table + " : " + str(modif))
+
+    def operations_ajout(self, ajout: list[list[str]], table: str):
+        if table == "glissade":
+            self.db.ajouter_glissades(ajout)
+        elif table == "patinoire":
+            self.db.ajouter_patinoires(ajout)
+        elif table == "piscine":
+            self.db.ajouter_piscines(ajout)

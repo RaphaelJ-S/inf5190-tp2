@@ -33,8 +33,7 @@ def get_db():
 
 @app.before_first_request
 def initialiser_planificateur():
-
-    planificateur = Planificateur(5, get_db())
+    planificateur = Planificateur(get_db())
     planificateur.run()
 
 
