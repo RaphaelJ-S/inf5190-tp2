@@ -22,3 +22,6 @@ class Piscine(db.Model):
         return [self.id_uev, self.type, self.nom, self.adresse, self.propriete,
                 self.gestion, self.point_x, self.point_y, self.equipement,
                 self.longitude, self.latitude, self.nom_arr]
+
+    def __str__(self):
+        return f"Piscine {self.nom} - Arrondissement {self.nom_arr}."

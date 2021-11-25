@@ -1,12 +1,11 @@
-from app.src.db.base_donnees import Base_Donnees
+from app.src.service.service import Service
+from app.src.service.service_msg import Service_Msg
+from app.src.message.messagerie import Messagerie
 
 
 class MAJ:
-    def __init__(self, db: Base_Donnees):
-        self.db = db
-
-    def _maj_dates(self, nv_donnees: dict):
-        self.db.maj_date_sources(list(nv_donnees))
+    def __init__(self, service: Service):
+        self.service = service
 
     def trouver_diff_installations(self, nv_donnees: dict):
         nom_tables = list(nv_donnees)
@@ -18,12 +17,8 @@ class MAJ:
             changements[nom] = diff
         return changements
 
-    def _get_anciennes_donnees(self, nom: str) -> list[list[str]]:
-        return {
-            "piscine": self.db.get_piscines(),
-            "glissade": self.db.get_glissades(),
-            "patinoire": self.db.get_patinoires()
-        }.get(nom, None)
+    def _get_anciennes_donnees(self, nom: str) -> list[list]:
+        return self.service.get_donnees(nom)
 
     def _diff_installation(self,
                            anc_donnees: list,
@@ -43,6 +38,7 @@ class MAJ:
                     delta = self._enlever_elements(
                         i, y, anc_donnees, nv_donnees)
                     break
+            # on modifie les listes alors on doit modifier les index
             i -= delta - 1
             range_i -= delta
             delta = 0
@@ -56,16 +52,15 @@ class MAJ:
         nv_donnees.pop(index_y)
         return 1
 
-    def effectuer_changements(self, a_effectuer: dict[str, tuple[list[list[str]]]]):
+    def effectuer_changements(self, a_effectuer: dict[str, tuple[list[list[str]]]]) -> list[str]:
         liste_nom_table = list(a_effectuer)
         for nom in liste_nom_table:
             self.operations_ajout(a_effectuer[nom][0], nom)
             # Ces fonctionnalités ne font pas partie du TP mais elle sont
             # gardées pour développement futur
-            self.operations_suppression(a_effectuer[nom][1], nom)
-            self.operations_modification(a_effectuer[nom][2], nom)
-
-        self.db.maj_date_sources(liste_nom_table)
+            # self.operations_suppression(a_effectuer[nom][1], nom)
+            # self.operations_modification(a_effectuer[nom][2], nom)
+        return liste_nom_table
 
     def operations_suppression(self, supp: list[list[str]], table: str):
         return  # print("Suppression dans " + table + " : " + str(supp))
@@ -74,9 +69,7 @@ class MAJ:
         return  # print("Modification dans " + table + " : " + str(modif))
 
     def operations_ajout(self, ajout: list[list[str]], table: str):
-        if table == "glissade":
-            self.db.ajouter_glissades(ajout)
-        elif table == "patinoire":
-            self.db.ajouter_patinoires(ajout)
-        elif table == "piscine":
-            self.db.ajouter_piscines(ajout)
+        if ajout:
+            self.service.ajouter_donnees(ajout, table)
+            serv = Service_Msg(Messagerie())
+            serv.executer_envois("Ajout", ajout, table)

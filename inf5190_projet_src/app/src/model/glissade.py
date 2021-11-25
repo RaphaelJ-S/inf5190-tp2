@@ -15,3 +15,6 @@ class Glissade(db.Model):
     def as_partial_list(self) -> list[str]:
         return [self.ouvert, self.deblaye, self.nom, self.cle, self.date_maj,
                 self.nom_arr]
+
+    def __str__(self):
+        return f"Glissade {self.nom} - Arrondissement {self.nom_arr}."

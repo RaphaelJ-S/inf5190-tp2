@@ -1,8 +1,8 @@
-- nom: Raphael
+- nom: SENDER
   email: raphy.inf5190.labo@gmail.com
+  mdp: Mhs89pz6zrmfhCg
   liste_arr:
-    - Lasalle
-    - Verdun
+
 - nom: Chose
   email: invalide.chose@gmail.com
   liste_arr:

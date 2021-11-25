@@ -15,3 +15,6 @@ class Patinoire(db.Model):
     def as_partial_list(self):
         return [self.date_heure, self.deblaye, self.nom, self.arrose,
                 self.resurface, self.nom_arr]
+
+    def __str__(self):
+        return f"Patinoire {self.nom} - Arrondissement {self.nom_arr}."

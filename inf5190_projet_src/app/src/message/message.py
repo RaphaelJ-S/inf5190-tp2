@@ -4,5 +4,5 @@ from abc import ABC, abstractmethod
 class Message(ABC):
 
     @abstractmethod
-    def envoyer(self):
+    def envoyer(self, action, donnees):
         return

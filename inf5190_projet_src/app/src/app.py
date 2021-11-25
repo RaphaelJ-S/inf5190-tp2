@@ -16,12 +16,6 @@ def creer_app():
     db.init_app(app)
     with app.app_context():
         db.create_all()
-        # get_db().ajouter_source(
-        #     ["https://data.montreal.ca/dataset/4604afb7-a7c4-4626-a3ca-e136158133f2/resource/cbdca706-569e-4b4a-805d-9af73af03b14/download/piscines.csv", "piscine"])
-        # get_db().ajouter_source(
-        #     ["https://data.montreal.ca/dataset/225ac315-49fe-476f-95bd-a1ce1648a98c/resource/5d1859cc-2060-4def-903f-db24408bacd0/download/l29-patinoire.xml", "patinoire"])
-        # get_db().ajouter_source(
-        #     ["http://www2.ville.montreal.qc.ca/services_citoyens/pdf_transfert/L29_GLISSADE.xml", "glissade"])
 
 
 def get_db():
@@ -33,7 +27,7 @@ def get_db():
 
 @app.before_first_request
 def initialiser_planificateur():
-    planificateur = Planificateur(get_db())
+    planificateur = Planificateur(get_db(), 5)
     planificateur.run()
 
 
