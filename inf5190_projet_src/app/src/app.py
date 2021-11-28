@@ -27,7 +27,9 @@ def get_db():
 
 @app.before_first_request
 def initialiser_planificateur():
+    # décommentez pour changer l'heure de téléchargement à toutes les 5 secondes
     planificateur = Planificateur(get_db(), 5)
+    # planificateur = Planificateur(get_db()) # décommentez pour changer l'heure de téléchargement à 1 fois / 24h
     planificateur.run()
 
 
