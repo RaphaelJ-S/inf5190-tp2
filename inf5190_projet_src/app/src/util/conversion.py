@@ -3,6 +3,21 @@ from app.src.model.patinoire import Patinoire
 from app.src.model.glissade import Glissade
 
 
+def convertir_liste_en_model(donnees: list[list[str]],
+                             nom_table: str) -> list:
+    donnees_converties = []
+    if nom_table == "glissade":
+        for donnee in donnees:
+            donnees_converties.append(str_vers_glissade(donnee))
+    elif nom_table == "patinoire":
+        for donnee in donnees:
+            donnees_converties.append(str_vers_patinoire(donnee))
+    elif nom_table == "piscine":
+        for donnee in donnees:
+            donnees_converties.append(str_vers_piscine(donnee))
+    return donnees_converties
+
+
 def str_vers_piscine(donnees: list[str]) -> Piscine:
     return Piscine(
         id_uev=int(donnees[0]),

@@ -8,16 +8,14 @@ from app.src.message.message import Message
 
 class Courriel(Message):
 
-    def __init__(self, sender: dict[str], info_dest: dict[str]):
+    def __init__(self, sender: dict[str], info_dest: dict[str], action: str, donnees: list):
         self.dest = info_dest
         self.sender = sender
+        self.body = self.former_message(action, donnees)
 
     def envoyer(self, action: str, donnees: list):
-        corps = self.former_message(action, donnees)
-        # Ce token est là pour donner un lien unique pour se désabonner
         adresse_source = self.sender["email"]
         adresse_dest = self.dest["email"]
-        body = corps
         subject = "Mise à jour des installations municipales de récréation."
 
         msg = MIMEMultipart()
@@ -25,7 +23,7 @@ class Courriel(Message):
         msg['From'] = adresse_source
         msg['To'] = adresse_dest
 
-        msg.attach(MIMEText(body, 'plain'))
+        msg.attach(MIMEText(self.body, 'plain'))
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.ehlo()
         server.starttls()

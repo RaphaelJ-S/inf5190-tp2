@@ -17,11 +17,14 @@ class MAJ:
             changements[nom] = diff
         return changements
 
-    def _get_anciennes_donnees(self, nom: str) -> list[list]:
-        return self.service.get_donnees(nom)
+    def _get_anciennes_donnees(self, nom: str) -> list[list[str]]:
+        representables = self.service.get_donnees(nom)
+        for rep in representables:
+            rep = rep.as_partial_list()
+        return representables
 
     def _diff_installation(self,
-                           anc_donnees: list,
+                           anc_donnees: list[list[str]],
                            nv_donnees: list[list[str]]
                            ) -> tuple[list[list[str]]]:
         modif = []
@@ -29,7 +32,7 @@ class MAJ:
         i = 0
         delta = 0
         while i < range_i:
-            curr_donnees = anc_donnees[i].as_partial_list()
+            curr_donnees = anc_donnees[i]
             for y in range(len(nv_donnees)):
                 if curr_donnees[2] == nv_donnees[y][2]:  # le nom est le même
                     # S'il y a des différences dans les données
@@ -52,14 +55,18 @@ class MAJ:
         nv_donnees.pop(index_y)
         return 1
 
-    def effectuer_changements(self, a_effectuer: dict[str, tuple[list[list[str]]]]) -> list[str]:
+    def effectuer_changements(
+            self,
+            a_effectuer: dict[str, tuple[list[list[str]]]]) -> list[str]:
         liste_nom_table = list(a_effectuer)
+        service_msg = Service_Msg(Messagerie())
         for nom in liste_nom_table:
-            self.operations_ajout(a_effectuer[nom][0], nom)
+            self.operations_ajout(a_effectuer[nom][0], nom, service_msg)
             # Ces fonctionnalités ne font pas partie du TP mais elle sont
             # gardées pour développement futur
             # self.operations_suppression(a_effectuer[nom][1], nom)
             # self.operations_modification(a_effectuer[nom][2], nom)
+        service_msg.executer_envois()
         return liste_nom_table
 
     def operations_suppression(self, supp: list[list[str]], table: str):
@@ -68,8 +75,10 @@ class MAJ:
     def operations_modification(self, modif: list[list[str]], table: str):
         return  # print("Modification dans " + table + " : " + str(modif))
 
-    def operations_ajout(self, ajout: list[list[str]], table: str):
+    def operations_ajout(self,
+                         ajout: list[list[str]],
+                         table: str,
+                         service_msg: Service_Msg):
         if ajout:
             self.service.ajouter_donnees(ajout, table)
-            serv = Service_Msg(Messagerie())
-            serv.executer_envois("Ajout", ajout, table)
+            service_msg.planifier_envois("Ajout", ajout, table)
