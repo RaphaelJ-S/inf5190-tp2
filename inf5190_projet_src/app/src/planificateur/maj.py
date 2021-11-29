@@ -1,5 +1,4 @@
 from app.src.service.service import Service
-from app.src.service.service_msg import Service_Msg
 from app.src.message.messagerie import Messagerie
 
 
@@ -59,14 +58,14 @@ class MAJ:
             self,
             a_effectuer: dict[str, tuple[list[list[str]]]]) -> list[str]:
         liste_nom_table = list(a_effectuer)
-        service_msg = Service_Msg(Messagerie())
+        messagerie = Messagerie()
         for nom in liste_nom_table:
-            self.operations_ajout(a_effectuer[nom][0], nom, service_msg)
+            self.operations_ajout(a_effectuer[nom][0], nom, messagerie)
             # Ces fonctionnalités ne font pas partie du TP mais elle sont
             # gardées pour développement futur
             # self.operations_suppression(a_effectuer[nom][1], nom)
             # self.operations_modification(a_effectuer[nom][2], nom)
-        service_msg.executer_envois()
+        messagerie.executer_envois()
         return liste_nom_table
 
     def operations_suppression(self, supp: list[list[str]], table: str):
@@ -78,7 +77,7 @@ class MAJ:
     def operations_ajout(self,
                          ajout: list[list[str]],
                          table: str,
-                         service_msg: Service_Msg):
+                         messagerie: Messagerie):
         if ajout:
             self.service.ajouter_donnees(ajout, table)
-            service_msg.planifier_envois("Ajout", ajout, table)
+            messagerie.planifier_envois("Ajout", ajout, table)
