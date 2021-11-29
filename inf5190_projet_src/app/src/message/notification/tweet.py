@@ -1,7 +1,7 @@
-from app.src.message.message import Message
+from app.src.message.notification.notification import Notification
 
 
-class Tweet(Message):
+class Tweet(Notification):
 
     def __init__(self, compte: str, info: str):
         self.compte = compte

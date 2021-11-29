@@ -2,10 +2,10 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
 
-from app.src.message.notification.message import Message
+from app.src.message.notification.notification import Notification
 
 
-class Courriel(Message):
+class Courriel(Notification):
 
     def __init__(self, adresse: str, corps: str,
                  notifiant: dict[str] = {

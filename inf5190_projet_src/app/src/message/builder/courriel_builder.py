@@ -1,33 +1,45 @@
-
-
-from app.src.message.notification.courriel import Courriel
 import uuid
 
+from app.src.message.builder.notification_builder import NotificationBuilder
+from app.src.message.notification.courriel import Courriel
+from app.src.message.notification.notification import Notification
 
-class CourrielBuilder:
+
+class CourrielBuilder(NotificationBuilder):
 
     def __init__(self):
-        self.dest_nom = "Anonyme"
-        self.dest_adresse = "none_inf5190@gmail.com"
-        self.list_arr = []
-        self.corps = ""
+        self.courriels = []
 
-    def ajouter_destinataire(self, destinataire: dict):
-        self.dest_nom = destinataire["nom"]
-        self.dest_adresse = destinataire["email"]
-        self.list_arr = destinataire["liste_arr"]
+    def ajouter_notification(self, dest_info: dict,
+                             action: str, donnees: list):
+        try:
+            adresse = dest_info["email"]
+            nom = dest_info["nom"]
+            liste_arr = dest_info["liste_arr"]
+            corps = self.former_corps(action, donnees, nom, liste_arr)
+            self.courriels.append(Courriel(adresse, corps))
 
-    def ajouter_message(self, action: str, donnees: list):
+        except ValueError as ve:
+            print(f"ajouter_notification : " +
+                  "Erreur dans la création d'une notification. {adresse}\n" +
+                  "{ve}")
+
+    def former_corps(self, action: str, donnees: list,
+                     nom: str, liste_arr: list[str]) -> str:
         token = uuid.uuid4().hex
-        msg = f"""Bonjour {self.dest_nom}.\n
+        msg = f"""Bonjour {nom}.\n
         Des changements ont été apportés aux installations d'un
         arrondissement que vous suivez.
         \n\n {action} des installations suivantes : \n\n"""
-        for donnee in donnees:
+        for donnee in self.filtrer_arrondissement(donnees, liste_arr):
             msg += str(donnee) + "\n"
         msg += f"""\n\nPour arrêter ces notifications, cliquez sur le lien 
         suivant : http://localhost/desabonne/{token} \n"""
-        self.corps = msg
+        return msg
 
-    def assembler(self) -> Courriel:
-        return Courriel(self.dest_adresse, self.corps)
+    def filtrer_arrondissement(self, donnees: list,
+                               liste_arr: list[str]) -> list:
+        return donnees
+
+    def assembler(self) -> list[Notification]:
+        return self.courriels

@@ -15,4 +15,8 @@ testService: app/tests/service/
 doc: app/src/fichier/doc.raml
 	raml2html app/src/fichier/doc.raml > app/src/templates/documentation.html
 
-.PHONY: run test testPlanif testService
+pep8: scripts/pycode.py
+	python scripts/pycode.py
+	
+
+.PHONY: run test testPlanif testService pep8

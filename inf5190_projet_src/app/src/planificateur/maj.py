@@ -1,5 +1,6 @@
 from app.src.service.service import Service
 from app.src.message.messagerie import Messagerie
+from app.src.util.conversion import convertir_liste_en_model
 
 
 class MAJ:
@@ -59,12 +60,18 @@ class MAJ:
             a_effectuer: dict[str, tuple[list[list[str]]]]) -> list[str]:
         liste_nom_table = list(a_effectuer)
         messagerie = Messagerie()
+        models_ajout = []
         for nom in liste_nom_table:
-            self.operations_ajout(a_effectuer[nom][0], nom, messagerie)
+            a_ajouter = a_effectuer[nom][0]
+            if a_ajouter:
+                self.service.ajouter_donnees(a_ajouter, nom)
+                models_ajout += convertir_liste_en_model(a_ajouter, nom)
+
             # Ces fonctionnalités ne font pas partie du TP mais elle sont
             # gardées pour développement futur
             # self.operations_suppression(a_effectuer[nom][1], nom)
             # self.operations_modification(a_effectuer[nom][2], nom)
+        messagerie.planifier_envois("Ajout", models_ajout)
         messagerie.executer_envois()
         return liste_nom_table
 
@@ -73,11 +80,3 @@ class MAJ:
 
     def operations_modification(self, modif: list[list[str]], table: str):
         return  # print("Modification dans " + table + " : " + str(modif))
-
-    def operations_ajout(self,
-                         ajout: list[list[str]],
-                         table: str,
-                         messagerie: Messagerie):
-        if ajout:
-            self.service.ajouter_donnees(ajout, table)
-            messagerie.planifier_envois("Ajout", ajout, table)

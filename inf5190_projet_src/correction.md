@@ -4,9 +4,9 @@
 
 ### A1
 
-Ce point est essentiellement gérer par la classe "Planificateur". Pour tester ce point, il faut remplacer la ligne 30 du fichier app/src/app.py `planificateur = Planificateur(get_db())` par `planificateur = Planificateur(get_db(), 5)` ce qui change les paramètres du BackgroundScheduler pour être lancé en intervalles de 5 secondes. À noter que l'application continuera de faire les téléchargement tant qu'on arrête
+Ce point est essentiellement gérer par la classe "Planificateur". Pour tester ce point, il faut remplacer la ligne 30 du fichier app/src/app.py `planificateur = Planificateur(get_db())` par `planificateur = Planificateur(get_db(), 5)` ce qui change les paramètres du BackgroundScheduler pour être lancé immédiatement. La valeur n'a pas d'importance.
 
-On peut ensuite lancer l'application avec `make` et se déplacer sur la page de l'application(le back-end doit recevoir une requête pour commancer le décompte). Le téléchargement des ressources devrait commancer après 5 secondes. Si la base de données n'existe pas, elle sera créée à app/src/db/data.db et les informations obtenues seront stockées à l'intérieur. Les quatres tables concernées sont :
+On peut ensuite lancer l'application avec `make` et se déplacer sur la page de l'application(le back-end doit recevoir une requête pour commancer le téléchargement). Si la base de données n'existe pas, elle sera créée à app/src/db/data.db et les informations obtenues seront stockées à l'intérieur. Les quatres tables concernées sont :
 
 - piscine
 - patinoire
