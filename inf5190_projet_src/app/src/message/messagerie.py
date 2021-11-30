@@ -2,9 +2,8 @@ import yaml
 
 
 from app.src.message.builder.courriel_builder import CourrielBuilder
+from app.src.message.builder.tweet_builder import TweetBuilder
 from app.src.message.builder.notification_builder import NotificationBuilder
-# from app.src.message.builder.tweet_builder import TweetBuilder
-import app.src.util.conversion as conv
 from app.src.message.notification.notification import Notification
 
 
@@ -23,7 +22,10 @@ class Messagerie:
             if len(cibles_courriel) >= 1:
                 courriels = self.creer_notifications(
                     cibles_courriel, action, models, CourrielBuilder())
-                self.messages += courriels
+                tweets = self.creer_notifications(
+                    models, action, None, TweetBuilder()
+                )
+                self.messages += courriels + tweets
 
             # ajouter le/les tweet ici
 

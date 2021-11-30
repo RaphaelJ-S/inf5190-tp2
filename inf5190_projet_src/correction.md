@@ -27,6 +27,14 @@ Lancez l'application avec `make` à la racine du travail. Ouvrez une page à l'a
 
 ### B1
 
-Supprimez la base de données app/src/db/data.db puis effectuez les mêmes étapes que pour la fonctionnalité A1. Toutes les installations devraient être considérées comme étant de nouvelles installations et, par conséquent, être envoyé dans un courriel aux adresses contenues dans le fichier app/src/fichier/dest_courriel.yaml. Vous pouvez soit ajouté une adresse à laquelle vous avez accès dans ce fichier ou simplement utiliser la première adresse du fichier. Cette adresse est celle qui envoit tous les courriels et elle s'envoie aussi chaque courriels.
+Suite à la création initiale de la base de données, il ne devrait pas être nécessaire de faire des modification. Toutes les installations devraient être considérées comme étant de nouvelles installations et, par conséquent, être envoyées dans un courriel aux adresses contenues dans le fichier app/src/fichier/dest_courriel.yaml. Vous pouvez soit ajouté une adresse à laquelle vous avez accès dans ce fichier(en respectant le format) ou simplement utiliser la première adresse du fichier. Cette adresse est celle qui envoit tous les courriels et elle s'envoie aussi chaque courriel.
+
+Pour se connecter à l'adresse notifiante.
+
+- adresse: raphy.inf5190.labo@gmail.com
+- mot de passe: Mhs89pz6zrmfhCg
 
 ### B2
+
+Un compte d'application Twitter permet un nombre limité de requêtes(50 par 15 minutes) ce qui est largement dépassé lors du téléchargement initial suite à la création
+de la base de données. Vous devriez voir des messages d'erreurs apparaitre sur la console pour vous informer que la limite est dépassée. Pour vous assurer que les tweets ont bien été publiés, vous pouvez vous rendre sur le compte @INF5190Montreal.

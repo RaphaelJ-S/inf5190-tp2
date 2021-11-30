@@ -1,6 +1,7 @@
 from app.src.service.service import Service
 from app.src.message.messagerie import Messagerie
 from app.src.util.conversion import convertir_liste_en_model
+from app.src.util.conversion import convertir_model_en_liste
 
 
 class MAJ:
@@ -19,9 +20,7 @@ class MAJ:
 
     def _get_anciennes_donnees(self, nom: str) -> list[list[str]]:
         representables = self.service.get_donnees(nom)
-        for rep in representables:
-            rep = rep.as_partial_list()
-        return representables
+        return convertir_model_en_liste(representables)
 
     def _diff_installation(self,
                            anc_donnees: list[list[str]],

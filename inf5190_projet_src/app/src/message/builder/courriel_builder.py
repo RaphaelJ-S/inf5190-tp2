@@ -19,7 +19,7 @@ class CourrielBuilder(NotificationBuilder):
             corps = self.former_corps(action, donnees, nom, liste_arr)
             self.courriels.append(Courriel(adresse, corps))
 
-        except ValueError as ve:
+        except TypeError as ve:
             print(f"ajouter_notification : " +
                   "Erreur dans la création d'une notification. {adresse}\n" +
                   "{ve}")
