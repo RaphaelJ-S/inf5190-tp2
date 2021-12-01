@@ -21,13 +21,13 @@ Il n'y a pas vraiment de moyens de tester cette fonctionnalité à moins de chan
 
 ### A3
 
-Lancez l'application avec `make` à la racine du travail. Ouvrez une page à l'adresse locale port 5000 et rendez-vous sur le chemin /doc. La documentation devrait être affichée. Si elle ne l'est pas, c'est que le fichier n'a pas été généré, il faut donc entrer la commande `make doc` pour résoudre ce problème. Il faut que le logiciel 'raml2html' soit installé sur votre machine.
+Lancez l'application avec `make` à la racine du travail. Ouvrez une page à l'adresse `127.0.0.1:5000/doc`. La documentation devrait être affichée. Si elle ne l'est pas, c'est que le fichier n'a pas été généré, il faut donc entrer la commande `make doc` pour résoudre ce problème. Il faut que le logiciel 'raml2html' soit installé sur votre machine.
 
 ### A4
 
 ### B1
 
-Suite à la création initiale de la base de données, il ne devrait pas être nécessaire de faire des modification. Toutes les installations devraient être considérées comme étant de nouvelles installations et, par conséquent, être envoyées dans un courriel aux adresses contenues dans le fichier app/src/fichier/dest_courriel.yaml. Vous pouvez soit ajouté une adresse à laquelle vous avez accès dans ce fichier(en respectant le format) ou simplement utiliser la première adresse du fichier. Cette adresse est celle qui envoit tous les courriels et elle s'envoie aussi chaque courriel.
+Suite à la création initiale de la base de données, il ne devrait pas être nécessaire de faire des modification. Toutes les installations devraient être considérées comme étant de nouvelles installations et, par conséquent, être envoyées dans un courriel aux adresses contenues dans le fichier app/src/fichier/dest_courriel.yaml. Vous pouvez soit ajouter une adresse à laquelle vous avez accès dans ce fichier(en respectant le format) ou simplement utiliser la première adresse du fichier. Cette adresse est celle qui envoit tous les courriels et elle s'envoie aussi chaque courriel.
 
 Pour se connecter à l'adresse notifiante.
 
@@ -37,4 +37,4 @@ Pour se connecter à l'adresse notifiante.
 ### B2
 
 Un compte d'application Twitter permet un nombre limité de requêtes(50 par 15 minutes) ce qui est largement dépassé lors du téléchargement initial suite à la création
-de la base de données. Vous devriez voir des messages d'erreurs apparaitre sur la console pour vous informer que la limite est dépassée. Pour vous assurer que les tweets ont bien été publiés, vous pouvez vous rendre sur le compte @INF5190Montreal.
+de la base de données. Vous devriez voir des messages d'erreurs apparaitre sur la console pour vous informer que la limite est dépassée. Pour vous assurer que les tweets ont bien été publiés, vous pouvez vous rendre sur le compte twitte @INF5190Montreal.

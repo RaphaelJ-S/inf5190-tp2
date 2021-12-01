@@ -1,11 +1,16 @@
 
-from flask import Flask, g
+from flask import Flask
+from flask import g
+from flask import request
+from flask import redirect
+from flask.helpers import make_response
+from flask.json import jsonify
 from flask.templating import render_template
 
 from app.src.db.init_db import db
 from app.src.db.base_donnees import Base_Donnees
 from app.src.planificateur.planificateur import Planificateur
-import app.src.service.service as serv
+from app.src.service.service import Service
 
 app = Flask(__name__, static_folder="static", static_url_path="")
 
@@ -27,11 +32,14 @@ def get_db():
 
 @app.before_first_request
 def initialiser_planificateur():
-    # décommentez pour changer l'heure de téléchargement à toutes les 5 secondes
-    planificateur = Planificateur(get_db(), 5)
-    # planificateur = Planificateur(get_db()) # décommentez pour changer l'heure de téléchargement à 1 fois / 24h
+    # décommentez pour faire un téléchargement immédiatement après la première requête
+    # planificateur = Planificateur(get_db(), 5)
+    # décommentez pour changer l'heure de téléchargement à 1 fois / 24h
+    planificateur = Planificateur(get_db())
     planificateur.run()
 
+
+# Routes
 
 @app.route("/")
 def accueil():
@@ -41,6 +49,21 @@ def accueil():
 @app.route("/doc")
 def documentation():
     return render_template("documentation.html")
+
+
+# API
+
+@app.route("/api/installations")
+def selection_installations():
+    service = Service(get_db())
+    try:
+        installations = service.get_installations(
+            request.args.get("arrondissement"))
+    except ValueError as ve:
+        return make_response(jsonify(ve.args), 404)
+    except TypeError as te:
+        return make_response(jsonify(te.args), 400)
+    return jsonify(installations)
 
 
 def main():

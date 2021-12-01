@@ -170,4 +170,45 @@ pre code {
 .required {
   color: #f00;
 }
-    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>Documentation des services offerts par cette application.</h1><p></p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api" class="panel-title">/api</h3></div><div class="panel-body"><div class="panel-group"></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#api">/api</a></li></ul></div></div></div></div></body></html>
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>Documentation des services offerts par cette application.</h1><p></p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api" class="panel-title">/api</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_installations"><span class="parent">/api</span>/installations</a> <span class="methods"><a href="#api_installations_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_installations" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_installations_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Retourne les installations d&#39;un arrondissement donné en paramètre. Les installations ne contiennent pas nécessairement les même informations.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_installations_get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api</span>/installations</h4></div><div class="modal-body"><div class="alert alert-info"><p>Retourne les installations d&#39;un arrondissement donné en paramètre. Les installations ne contiennent pas nécessairement les même informations.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#api_installations_get_request" data-toggle="tab">Request</a></li><li><a href="#api_installations_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_installations_get_request"><h3>Query Parameters</h3><ul><li><strong>arrondissement</strong>: <em><span class="required">required</span>(type:string required)</em></li></ul></div><div class="tab-pane" id="api_installations_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Les installations de l&#39;arrondissement donné.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: Glissade Piscine Patinoire</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+   "piscines":[
+       {
+           "adresse": "une place",
+           "equipement": "equi",
+           "gestion": "Municipale",
+           "id": 123,
+           "id_uev": 1234567,
+           "latitude": "43.251235",
+           "longitude": "-14.335155",
+           "nom": "Parc fictif", 
+           "nom_arr": "Verdun",
+           "point_x": "4515234.5324",
+           "point_y": "1234564343",
+           "propriete": "Municipale",
+           "type": "Jeu d&#39;eau"
+       }
+   ],
+   "patinoires":[
+       {
+           "arrose":, "0",
+           "date_maj": "2021-03-21 13:11:29",
+           "deblaye": "0",
+           "id": 3,
+           "nom": "Aire de glissade, Parc Confédération ()", 
+           "nom_arr": "Verdun", 
+           "resurface" : "0"
+       }
+   ],
+   "glissades":[
+       {
+           "cle": "ver",
+           "date_maj": "2021-11-15 12:18:10",
+           "deblaye": "0",
+           "id": 3,
+           "nom": "Glissade, Parc Arthur-Therrien",
+           "nom_arr": "Verdun",
+           "ouvert": "0"
+       }
+   ]
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Le paramètre &#39;arrondissement&#39; n&#39;a pas été donné.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: string</p><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>L&#39;arrondissement donné en paramètre n&#39;a pas été trouvé.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: string</p></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#api">/api</a></li></ul></div></div></div></div></body></html>

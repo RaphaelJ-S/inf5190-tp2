@@ -18,10 +18,27 @@ class Piscine(db.Model):
         "arrondissement.nom", ondelete="CASCADE"),
         nullable=True, default="N/A")
 
-    def as_partial_list(self):
+    def as_partial_list(self) -> list:
         return [self.id_uev, self.type, self.nom, self.adresse, self.propriete,
                 self.gestion, self.point_x, self.point_y, self.equipement,
                 self.longitude, self.latitude, self.nom_arr]
 
-    def __str__(self):
+    def as_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "id_uev": self.id_uev,
+            "type": self.type,
+            "nom": self.nom,
+            "adresse": self.adresse,
+            "propriete": self.propriete,
+            "gestion": self.gestion,
+            "point_x": self.point_x,
+            "point_y": self.point_y,
+            "equipement": self.equipement,
+            "longitude": self.longitude,
+            "latitude": self.latitude,
+            "nom_arr": self.nom_arr
+        }
+
+    def __str__(self) -> str:
         return f"Piscine {self.nom} - Arrondissement {self.nom_arr}."

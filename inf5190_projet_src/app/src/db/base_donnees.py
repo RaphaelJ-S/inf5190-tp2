@@ -14,10 +14,6 @@ class Base_Donnees():
         self.db = type_db
         self.app = app
 
-    def ajouter_piscine(self, piscine: list[str]):
-        self.db.session.add(conv.str_vers_piscine(piscine))
-        self.db.session.commit()
-
     def get_sources(self) -> list[Source]:
         with self.app.app_context():
             return Source.query.all()
@@ -40,6 +36,42 @@ class Base_Donnees():
 
     def get_arrondissement_avec_nom(self, nom: str) -> Arrondissement:
         return Arrondissement.query.filter_by(nom=nom).first()
+
+    def get_installations(self) -> list:
+        with self.app.app_context():
+            piscines_q = (self.db.session.query(
+                Arrondissement, Piscine)
+                .join("piscines")
+            ).all()
+
+            patinoires_q = (self.db.session.query(
+                Arrondissement, Patinoire)
+                .join("patinoires")
+            ).all()
+            glissades_q = (self.db.session.query(
+                Arrondissement, Glissade)
+                .join("glissades")
+            ).all()
+            return piscines_q + patinoires_q + glissades_q
+
+    def get_installations_avec_arrondissement(self, nom_arr: str) -> list:
+        with self.app.app_context():
+            piscines_q = (self.db.session.query(
+                Arrondissement, Piscine)
+                .filter_by(nom=nom_arr)
+                .join("piscines")
+            ).all()
+            patinoires_q = (self.db.session.query(
+                Arrondissement, Patinoire)
+                .filter_by(nom=nom_arr)
+                .join("patinoires")
+            ).all()
+            glissades_q = (self.db.session.query(
+                Arrondissement, Glissade)
+                .filter_by(nom=nom_arr)
+                .join("glissades")
+            ).all()
+            return piscines_q, patinoires_q, glissades_q
 
     def ajouter_source(self, source: list[str]):
         with self.app.app_context():
@@ -88,6 +120,10 @@ class Base_Donnees():
                 self.ajouter_arrondissement(piscine[3])
                 self.db.session.add(conv.str_vers_piscine(piscine))
             self.db.session.commit()
+
+    # def ajouter_piscine(self, piscine: list[str]):
+    #     self.db.session.add(conv.str_vers_piscine(piscine))
+    #     self.db.session.commit()
 
     def maj_date_sources(self, nom_tables: list[str]):
         with self.app.app_context():

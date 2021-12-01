@@ -13,3 +13,9 @@ class Arrondissement(db.Model):
     piscines = db.relationship(
         "Piscine", backref="nom_arr_pisc", cascade="all, delete",
         passive_deletes=True, lazy=True)
+
+    def as_dict(self):
+        return {
+            "id": self.id,
+            "nom": self.nom
+        }

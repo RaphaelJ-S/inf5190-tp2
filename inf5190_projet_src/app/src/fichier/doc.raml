@@ -2,9 +2,119 @@
 title: Documentation des services offerts par cette application.
 mediaType: application/json
 types:
+    Piscine:
+        properties:
+            id:number
+            id_uev:number
+            type:string
+            nom:string
+            nom_arr:string
+            adresse:string
+            propriete:string
+            point_x:string
+            point_y:string
+            equipement:string
+            longitude:string
+            latitude:string
+    Patinoire:
+        properties:
+            id:number
+            nom:string
+            date_maj:string
+            deblaye:string
+            arrose:string
+            resurface:string
+            nom_arr:string
+    Glissade:
+        properties:
+            id:number
+            nom:string
+            ouvert:string
+            deblaye:string
+            cle:string
+            date_maj:string
+            nom_arr:string
+
 
 /api:
-    /test
+    /installations:
         get:
-            description: Test des fonctionnalité RAML
+            description: "Retourne les installations d'un arrondissement donné en paramètre. Les installations ne contiennent pas nécessairement les même informations."
+            queryParameters:
+                arrondissement: 
+                    type:string
+                    required: true
+            responses:
+                200:
+                    description: Les installations de l'arrondissement donné.
+                    body:
+                        application/json:
+                            type: |
+                                Glissade
+                                Piscine
+                                Patinoire
+
+                            example: |
+                             {
+                                "piscines":[
+                                    {
+                                        "adresse": "une place",
+                                        "equipement": "equi",
+                                        "gestion": "Municipale",
+                                        "id": 123,
+                                        "id_uev": 1234567,
+                                        "latitude": "43.251235",
+                                        "longitude": "-14.335155",
+                                        "nom": "Parc fictif", 
+                                        "nom_arr": "Verdun",
+                                        "point_x": "4515234.5324",
+                                        "point_y": "1234564343",
+                                        "propriete": "Municipale",
+                                        "type": "Jeu d'eau"
+                                    }
+                                ],
+                                "patinoires":[
+                                    {
+                                        "arrose":, "0",
+                                        "date_maj": "2021-03-21 13:11:29",
+                                        "deblaye": "0",
+                                        "id": 3,
+                                        "nom": "Aire de glissade, Parc Confédération ()", 
+                                        "nom_arr": "Verdun", 
+                                        "resurface" : "0"
+                                    }
+                                ],
+                                "glissades":[
+                                    {
+                                        "cle": "ver",
+                                        "date_maj": "2021-11-15 12:18:10",
+                                        "deblaye": "0",
+                                        "id": 3,
+                                        "nom": "Glissade, Parc Arthur-Therrien",
+                                        "nom_arr": "Verdun",
+                                        "ouvert": "0"
+                                    }
+                                ]
+                             }
+                400:
+                    description: Le paramètre 'arrondissement' n'a pas été donné.
+                    body:
+                        application/json:
+                            type: |
+                                string
+                            exemple:|
+                                {"Vous devez fournir le paramètre 'arrondissement'."}
+
+                404:
+                    description: L'arrondissement donné en paramètre n'a pas été trouvé.
+                    body:
+                        application/json:
+                            type: |
+                                string
+                            exemple:|
+                                {"L'arrondissement que vous avec fourni n'est pas valide. Veuillez entrer une des options suivantes : <liste d'arrondissements>"}
+
+
+
+
             

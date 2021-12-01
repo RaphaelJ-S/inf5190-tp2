@@ -21,3 +21,26 @@ class Service:
             "glissade": self.db.get_glissades(),
             "patinoire": self.db.get_patinoires()
         }.get(nom, None)
+
+    def get_installations(self, arrondissement: str) -> list:
+        nom_arrondissements = [arrondissement.nom
+                               for arrondissement
+                               in self.db.get_arrondissements()]
+        if arrondissement is None:
+            raise TypeError(
+                "Vous devez fournir le paramètre 'arrondissement'.")
+        elif not arrondissement in nom_arrondissements:
+            pres_nom = ', '.join(nom_arrondissements)
+            raise ValueError(f"L'arrondissement que vous avec fourni n'est" +
+                             " pas valide. Veuillez entrer une des options " +
+                             "suivantes : " + pres_nom)
+        else:
+            patinoires, piscines, glissades = (
+                self.db.
+                get_installations_avec_arrondissement(arrondissement))
+            installations = {
+                "piscines": [pisc[1].as_dict() for pisc in piscines],
+                "patinoires": [pat[1].as_dict() for pat in patinoires],
+                "glissades": [glis[1].as_dict() for glis in glissades]
+            }
+            return installations

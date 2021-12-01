@@ -16,5 +16,16 @@ class Glissade(db.Model):
         return [self.ouvert, self.deblaye, self.nom, self.cle, self.date_maj,
                 self.nom_arr]
 
+    def as_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "nom": self.nom,
+            "ouvert": self.ouvert,
+            "deblaye": self.deblaye,
+            "cle": self.cle,
+            "date_maj": self.date_maj,
+            "nom_arr": self.nom_arr
+        }
+
     def __str__(self):
         return f"Glissade {self.nom} - Arrondissement {self.nom_arr}."

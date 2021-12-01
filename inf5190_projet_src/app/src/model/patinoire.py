@@ -12,9 +12,20 @@ class Patinoire(db.Model):
         "arrondissement.nom", ondelete="CASCADE"),
         nullable=True, default="N/A")
 
-    def as_partial_list(self):
+    def as_partial_list(self) -> list:
         return [self.date_heure, self.deblaye, self.nom, self.arrose,
                 self.resurface, self.nom_arr]
 
-    def __str__(self):
+    def as_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "nom": self.nom,
+            "date_maj": self.date_heure,
+            "deblaye": self.deblaye,
+            "arrose": self.arrose,
+            "resurface": self.resurface,
+            "nom_arr": self.nom_arr
+        }
+
+    def __str__(self) -> str:
         return f"Patinoire {self.nom} - Arrondissement {self.nom_arr}."
