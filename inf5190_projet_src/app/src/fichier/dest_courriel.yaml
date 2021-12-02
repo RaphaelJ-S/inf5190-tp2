@@ -1,8 +1,41 @@
-- nom: SENDER
+courriel_envoyant:
+  nom: Sender
   email: raphy.inf5190.labo@gmail.com
-  liste_arr:
+  mdp: Mhs89pz6zrmfhCg
 
-- nom: Chose
-  email: invalide.chose@gmail.com
-  liste_arr:
-    - St-Laurent
+compte_twitter:
+  cle_consomateur: vwM2f6QSjsCC6MG1auC6WDEkc
+  secret_consomateur: U64nw7gEV2IgZErSocUR8Ohtf3YOFLS6vNWXo4ctpksAST8NrN
+  cle_acces: 1465737732538474497-IWPBmEjT4SFS0U9eOTozJfYz8TB2B4
+  secret_acces: FIPc7ueKQoHOrkm5eGg21sW0tHdp3ogO96tJL9IPJEypl
+
+courriel_cible:
+  - nom: Log
+    email: raphy.inf5190.labo@gmail.com
+    liste_arr:
+      - Ahuntsic-Cartierville
+      - Rivière-des-Prairies-Pointe-aux-Trembles
+      - Le Sud-Ouest
+      - Verdun
+      - Saint-Laurent
+      - LaSalle
+      - Le Plateau-Mont-Royal
+      - Ville-Marie
+      - Rosemont-La Petite-Patrie
+      - Mercier-Hochelaga-Maisonneuve
+      - Lachine
+      - Montréal-Nord
+      - L'Ile-Bizard-Sainte-Geneviève
+      - Villeray-Saint-Michel-Parc-Extension
+      - Côte-des-Neiges-Notre-Dame-de-Grâce
+      - Saint-Léonard
+      - Anjou
+      - Outremont
+      - Ahuntsic-Cartierville
+      - Pierrefonds-Roxboro
+      - Villeray-Saint-Michel-Parc-Extension
+  - nom: Chose
+    email: invalide.chose@gmail.com
+    liste_arr:
+      - St-Laurent
+      - Montréal-Nord

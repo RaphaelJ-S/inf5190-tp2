@@ -7,6 +7,10 @@ class Service:
     def __init__(self, db: Base_Donnees):
         self.db = db
 
+    def get_noms_arrondissements(self) -> list[str]:
+        arrondissements = self.db.get_arrondissements()
+        return [arr.nom for arr in arrondissements]
+
     def ajouter_donnees(self, donnees: list[list[str]], nom_table: str):
         if nom_table == "glissade":
             self.db.ajouter_glissades(donnees)
@@ -35,7 +39,7 @@ class Service:
                              " pas valide. Veuillez entrer une des options " +
                              "suivantes : " + pres_nom)
         else:
-            patinoires, piscines, glissades = (
+            piscines, patinoires, glissades = (
                 self.db.
                 get_installations_avec_arrondissement(arrondissement))
             installations = {

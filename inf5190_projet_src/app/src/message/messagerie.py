@@ -18,16 +18,15 @@ class Messagerie:
                          fich_courriel: str = "app/src/fichier/" +
                          "dest_courriel.yaml"):
         if models:
-            cibles_courriel = self.charger_addresses_courriel(fich_courriel)
-            if len(cibles_courriel) >= 1:
+            source, twitter, courriel_cible = self.charger_contenu_configuration(
+                fich_courriel)
+            if source and twitter:
                 courriels = self.creer_notifications(
-                    cibles_courriel, action, models, CourrielBuilder())
+                    courriel_cible, action, models, CourrielBuilder(source))
                 tweets = self.creer_notifications(
-                    models, action, None, TweetBuilder()
+                    models, action, None, TweetBuilder(twitter)
                 )
                 self.messages += courriels + tweets
-
-            # ajouter le/les tweet ici
 
     def executer_envois(self):
         for message in self.messages:
@@ -41,7 +40,10 @@ class Messagerie:
             builder.ajouter_notification(cible, action, models)
         return builder.assembler()
 
-    def charger_addresses_courriel(self, nom_fichier: str):
+    def charger_contenu_configuration(self, nom_fichier: str) -> dict and dict and dict:
         with open(nom_fichier, "r") as file:
-            adresses = yaml.safe_load(file)
-        return adresses
+            contenu = yaml.safe_load(file)
+        courriel = contenu["courriel_envoyant"]
+        twitter = contenu["compte_twitter"]
+        courriel_cible = contenu["courriel_cible"]
+        return courriel, twitter, courriel_cible

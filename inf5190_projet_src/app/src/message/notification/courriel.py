@@ -8,9 +8,7 @@ from app.src.message.notification.notification import Notification
 class Courriel(Notification):
 
     def __init__(self, adresse: str, corps: str,
-                 notifiant: dict[str] = {
-                     "email": "raphy.inf5190.labo@gmail.com",
-                     "mdp": "Mhs89pz6zrmfhCg"}):
+                 notifiant: dict[str]):
         self.dest = adresse
         self.notifiant = notifiant
         self.corps = corps

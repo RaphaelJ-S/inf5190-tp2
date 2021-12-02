@@ -1,0 +1,29 @@
+{% extends "main.html" %}{% block content %}
+<h1>Recherche d'installations</h1>
+<div class="formulaire container">
+  <form id="formulaire-accueil">
+    <div class="form-input">
+      <label for="arr-select-id" class="form-label">Arrondissements</label>
+
+      <select
+        class="form-select"
+        id="arr-select-id"
+        aria-label="Selection d'arrondissement"
+      >
+        <option selected>
+          Sélectionnez l'arrondissement qui vous intéresse
+        </option>
+        {% for nom in arrondissements%}
+        <option value="{{nom}}">{{nom}}</option>
+        {%endfor%}
+      </select>
+    </div>
+  </form>
+  <p class="msg-erreur" style="color: red">&nbsp;</p>
+
+  <div class="glissades-tbl"></div>
+  <div class="piscines-tbl"></div>
+  <div class="patinoires-tbl"></div>
+</div>
+<script src="/js/script.js"></script>
+{%endblock%}

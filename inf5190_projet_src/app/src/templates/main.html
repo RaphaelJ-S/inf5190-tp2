@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/vendor/fontawesome/css/all.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script defer src="/vendor/fontawesome/js/all.js"></script>
+    <title>Travail de session - Service d'installations Montréal</title>
+  </head>
+  <body class="container-fluid">
+    <div class="main container-fluid">
+      <aside class="sidebar show">
+        <div class="sidebar-links">
+          <ul>
+            <li>
+              <a class="btn btn-primary" href="/">Formulaire de créations</a>
+            </li>
+          </ul>
+        </div>
+        <button id="toggle-sidebar-btn">
+          <i class="fas fa-arrows-alt-h fa-2x"></i>
+        </button>
+      </aside>
+
+      <div class="content container-fluid">{%block content%}{%endblock%}</div>
+    </div>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/sidebar.js"></script>
+  </body>
+</html>

@@ -7,8 +7,9 @@ from app.src.message.notification.notification import Notification
 
 class CourrielBuilder(NotificationBuilder):
 
-    def __init__(self):
+    def __init__(self, adresse_source):
         self.courriels = []
+        self.source = adresse_source
 
     def ajouter_notification(self, dest_info: dict,
                              action: str, donnees: list):
@@ -17,7 +18,7 @@ class CourrielBuilder(NotificationBuilder):
             nom = dest_info["nom"]
             liste_arr = dest_info["liste_arr"]
             corps = self.former_corps(action, donnees, nom, liste_arr)
-            self.courriels.append(Courriel(adresse, corps))
+            self.courriels.append(Courriel(adresse, corps, self.source))
 
         except TypeError as ve:
             print(f"ajouter_notification : " +
