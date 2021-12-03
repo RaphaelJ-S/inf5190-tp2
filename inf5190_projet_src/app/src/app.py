@@ -33,9 +33,9 @@ def get_db():
 @app.before_first_request
 def initialiser_planificateur():
     # décommentez pour faire un téléchargement immédiatement après la première requête
-    planificateur = Planificateur(get_db(), 5)
+    # planificateur = Planificateur(get_db(), 5)
     # décommentez pour changer l'heure de téléchargement à 1 fois / 24h
-    # planificateur = Planificateur(get_db())
+    planificateur = Planificateur(get_db())
     planificateur.run()
 
 
@@ -44,8 +44,8 @@ def initialiser_planificateur():
 @app.route("/")
 def accueil():
     serv = Service(get_db())
-    nom_arrs = serv.get_noms_arrondissements()
-    return render_template("form_installations.html", arrondissements=nom_arrs)
+    nom_installations = serv.get_nom_installations()
+    return render_template("form_installations.html", installations=nom_installations)
 
 
 @app.route("/doc")
@@ -66,6 +66,19 @@ def selection_installations():
     except TypeError as te:
         return make_response(jsonify(te.args), 400)
     return jsonify(installations)
+
+
+@app.route("/api/installation")
+def selection_installation():
+    service = Service(get_db())
+    try:
+        installation = service.get_installation(
+            request.args.get("installation"))
+        return jsonify(installation)
+    except ValueError as ve:
+        return make_response(jsonify(ve.args), 404)
+    except TypeError as te:
+        return make_response(jsonify(te.args), 400)
 
 
 def main():

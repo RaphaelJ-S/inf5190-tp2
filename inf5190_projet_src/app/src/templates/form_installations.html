@@ -2,20 +2,26 @@
 <h1>Recherche d'installations</h1>
 <div class="formulaire container">
   <form id="formulaire-accueil">
-    <div class="form-input">
-      <label for="arr-select-id" class="form-label">Arrondissements</label>
+    <div class="form-group grp-input">
+      <label for="input-arr" class="form-label">Arrondissements</label>
 
-      <select
-        class="form-select"
-        id="arr-select-id"
-        aria-label="Selection d'arrondissement"
-      >
-        <option selected>
-          Sélectionnez l'arrondissement qui vous intéresse
-        </option>
-        {% for nom in arrondissements%}
+      <input
+        type="text"
+        class="form-control"
+        id="input-arr"
+        placeholder="Entrez le nom d'un arrondissement"
+      />
+      <button type="submit" id="btn-soumettre" class="btn btn-primary">
+        Chercher les installations
+      </button>
+    </div>
+    <div class="form-group grp-select">
+      <label for="select-arr" class="form-label">Installations</label>
+      <select name="installation" id="select-arr" class="form-select">
+        <option selected>Sélectionnez l'installation désirée</option>
+        {% for nom in installations %}
         <option value="{{nom}}">{{nom}}</option>
-        {%endfor%}
+        {% endfor %}
       </select>
     </div>
   </form>

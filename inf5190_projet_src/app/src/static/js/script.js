@@ -1,23 +1,54 @@
-const select_control = document.querySelector("#arr-select-id");
+const btn = document.querySelector("#btn-soumettre");
+const input = document.querySelector("#input-arr");
+const select = document.querySelector("#select-arr");
 const paragraphe = document.querySelector(".msg-erreur");
 const aff_glissades = document.querySelector(".glissades-tbl");
 const aff_patinoires = document.querySelector(".patinoires-tbl");
 const aff_piscines = document.querySelector(".piscines-tbl");
 
-select_control.addEventListener("change", async (event) => {
+btn.addEventListener("click", async (event) => {
   try {
-    const body = await send(event);
+    event.preventDefault();
+    const body = await send(input.value);
     afficher_installations(body);
   } catch (erreur) {
     afficher_erreur(erreur);
   }
 });
 
-async function send(event) {
+select.addEventListener("change", async (event) => {
+  try {
+    const body = await send_nom(event);
+    console.log(body);
+    afficher_installations(body);
+  } catch (erreur) {
+    afficher_erreur(erreur);
+  }
+});
+
+async function send_nom(event) {
   let query_string = new URLSearchParams({
-    arrondissement: event.target.value,
+    installation: event.target.value,
+  });
+  const response = await fetch("/api/installation?" + query_string.toString(), {
+    method: "GET",
+    header: {
+      "Content-Type": "application/son",
+    },
   });
 
+  if (!response.ok) {
+    return response.json().then((msg) => {
+      throw new Error(msg);
+    });
+  }
+  return response.json();
+}
+
+async function send(input) {
+  let query_string = new URLSearchParams({
+    arrondissement: input,
+  });
   const response = await fetch(
     "/api/installations?" + query_string.toString(),
     {
@@ -38,12 +69,9 @@ async function send(event) {
 
 const afficher_installations = (dict_installations) => {
   reset_erreur();
-  glissades = dict_installations["glissades"];
-  former_glissades(glissades);
-  piscines = dict_installations["piscines"];
-  former_piscines(piscines);
-  patinoires = dict_installations["patinoires"];
-  former_patinoires(patinoires);
+  former_glissades(dict_installations["glissades"]);
+  former_piscines(dict_installations["piscines"]);
+  former_patinoires(dict_installations["patinoires"]);
 };
 
 const afficher_erreur = (erreur) => {
@@ -156,6 +184,7 @@ const former_patinoires = (patinoires) => {
 
 const former_piscines = (piscines) => {
   table = "";
+  console.log(piscines);
   if (piscines !== undefined && piscines !== null && piscines.length > 0) {
     header =
       "<h3>Piscines</h3>" +

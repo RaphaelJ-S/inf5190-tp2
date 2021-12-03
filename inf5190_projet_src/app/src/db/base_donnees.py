@@ -30,6 +30,18 @@ class Base_Donnees():
         with self.app.app_context():
             return Piscine.query.all()
 
+    def get_piscine_avec_nom(self, nom_installation: str) -> Piscine:
+        with self.app.app_context():
+            return Piscine.query.filter_by(nom=nom_installation).first()
+
+    def get_patinoire_avec_nom(self, nom_installation: str) -> Patinoire:
+        with self.app.app_context():
+            return Patinoire.query.filter_by(nom=nom_installation).first()
+
+    def get_glissade_avec_nom(self, nom_installation: str) -> Glissade:
+        with self.app.app_context():
+            return Glissade.query.filter_by(nom=nom_installation).first()
+
     def get_arrondissements(self) -> list[Arrondissement]:
         with self.app.app_context():
             return Arrondissement.query.all()
@@ -39,20 +51,10 @@ class Base_Donnees():
 
     def get_installations(self) -> list:
         with self.app.app_context():
-            piscines_q = (self.db.session.query(
-                Arrondissement, Piscine)
-                .join("piscines")
-            ).all()
-
-            patinoires_q = (self.db.session.query(
-                Arrondissement, Patinoire)
-                .join("patinoires")
-            ).all()
-            glissades_q = (self.db.session.query(
-                Arrondissement, Glissade)
-                .join("glissades")
-            ).all()
-            return piscines_q + patinoires_q + glissades_q
+            piscines_q = self.get_piscines()
+            patinoires_q = self.get_patinoires()
+            glissades_q = self.get_glissades()
+            return piscines_q, patinoires_q, glissades_q
 
     def get_installations_avec_arrondissement(self, nom_arr: str) -> list:
         with self.app.app_context():
@@ -120,10 +122,6 @@ class Base_Donnees():
                 self.ajouter_arrondissement(piscine[3])
                 self.db.session.add(conv.str_vers_piscine(piscine))
             self.db.session.commit()
-
-    # def ajouter_piscine(self, piscine: list[str]):
-    #     self.db.session.add(conv.str_vers_piscine(piscine))
-    #     self.db.session.commit()
 
     def maj_date_sources(self, nom_tables: list[str]):
         with self.app.app_context():
