@@ -5,10 +5,21 @@ from app.src.util.conversion import convertir_model_en_liste
 
 
 class MAJ:
+    """
+    S'occupe de la mise à jours des données et de toutes opérations reliées
+    à ces mises à jours.
+    """
+
     def __init__(self, service: Service):
         self.service = service
 
     def trouver_diff_installations(self, nv_donnees: dict):
+        """
+        Trouve les différences entre les données téléchargées et celles dans
+        la base de données et les retournent.
+        @nv_donnes : Les nouvelles données.
+        @return : Les changement apportés aux nouvelles données
+        """
         nom_tables = list(nv_donnees)
         changements = {}
         for nom in nom_tables:
@@ -19,6 +30,13 @@ class MAJ:
         return changements
 
     def _get_anciennes_donnees(self, nom: str) -> list[list[str]]:
+        """
+        Retourne les données des installations dans la base de données sous
+        forme de liste de paramètres.
+        @nom : Le nom de la table.
+        @return : Les installation de la table @nom sous forme de liste
+        de paramètres.
+        """
         representables = self.service.get_donnees(nom)
         return convertir_model_en_liste(representables)
 
@@ -26,6 +44,13 @@ class MAJ:
                            anc_donnees: list[list[str]],
                            nv_donnees: list[list[str]]
                            ) -> tuple[list[list[str]]]:
+        """
+        Retourne les différences entre les données sous forme de tuple
+        (a_ajouter, a_supprimer, a_modifier).
+        @anc_donnes : Des données contenues dans la base de données.
+        @nv_donnes : Des données téléchargées.
+        @return : Les changements à effectuer.
+        """
         modif = []
         range_i = len(anc_donnees)
         i = 0
@@ -50,6 +75,15 @@ class MAJ:
                           anc_donnees: list[list[str]],
                           nv_donnees: list[list[str]]
                           ) -> int:
+        """
+        Supprime les éléments @index_i, @index_y des données et retourne
+        1 pour modifier les delta puisque les listes ont été modifiées.
+        @index_i : L'index de la liste anc_donnes.
+        @index_y :  L'index de la liste nv_donnes.
+        @anc_donnees : Les données de la base de données.
+        @nv_donnees : Les nouvelles données.
+        @return : 1...
+        """
         anc_donnees.pop(index_i)
         nv_donnees.pop(index_y)
         return 1
@@ -57,6 +91,11 @@ class MAJ:
     def effectuer_changements(
             self,
             a_effectuer: dict[str, tuple[list[list[str]]]]) -> list[str]:
+        """
+        Effectue les opérations liées aux différents changements à apporter.
+        @a_effectuer : les changement à effectuer, organiser par table.
+        @return : La liste des nom des tables.
+        """
         liste_nom_table = list(a_effectuer)
         messagerie = Messagerie()
         models_ajout = []

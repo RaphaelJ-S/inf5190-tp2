@@ -14,7 +14,7 @@
 
 Les fonctionnalités réalisée pour ce travail sont les suivantes :
 
-- A1, A2, A3, A4, A5
+- A1, A2, A3, A4, A5, A6
 - B1, B2
 
 Comme la base de données va devoir être créée et remplie lors du départ de l'application et que ces opérations vont être réalisées automatiquement, il serait préférable de changer les configurations nécessaires(Changer l'adresse courriel de l'envoyant pour le cas B1 et le compte Twitter si nécessaire) pour les tests avant de partir l'application.
@@ -45,6 +45,8 @@ Lancez l'application avec `make` à la racine du travail. Ouvrez une page à l'a
 ### A4
 
 ### A5
+
+### A6
 
 ### B1
 

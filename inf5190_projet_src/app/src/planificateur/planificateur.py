@@ -8,10 +8,14 @@ from app.src.service.service import Service
 
 
 class Planificateur:
+    """
+    S'occupe de l'organisation et de l'exécution des opération planifiées.
+    """
 
-    def __init__(self, db: Base_Donnees, frequence=None,):
+    def __init__(self, db: Base_Donnees, frequence=None):
         self.frequence = frequence
         self.db = db
+        # Ajoute les sources de base à la bd si elles ne sont pas présentes.
         sources = self.db.get_sources()
         if not sources:
             db.ajouter_source(
@@ -34,6 +38,12 @@ class Planificateur:
             timezone="UTC", max_instance=1)
 
     def run(self):
+        """
+        Commence le BackgroundScheduler avec un travail exécuté selon
+        la variable d'instance 'frequence'.
+        Si elle est None, le travail sera exécuté à minuit, une fois par jours,
+        sinon il sera exécuté une seule fois, après la première requête.
+        """
         self.travail.add_job(
             self.lireSites, 'cron', hour=0
         ) if self.frequence is None else self.travail.add_job(
@@ -44,10 +54,20 @@ class Planificateur:
         atexit.register(lambda: self.travail.shutdown())
 
     def lireSites(self):
+        """
+        Télécharge les sources et mets à jours les données.
+        """
         nv_donnees = self.telechargeur.start()
         self.mise_a_jour(nv_donnees, Service(self.db))
 
     def mise_a_jour(self, nv_donnees: dict, service: Service):
+        """
+        Cherche quels sorte de changements ont été effectués sur les donneés
+        , effectue les changements et mets à jours les date de téléchargement
+        des sources.
+        @nv_donnees : les données provenant des sources.
+        @service : le service à utiliser pour la mise à jours.
+        """
         maj = MAJ(service)
         changements = maj.trouver_diff_installations(nv_donnees)
         liste_nom_table = maj.effectuer_changements(changements)

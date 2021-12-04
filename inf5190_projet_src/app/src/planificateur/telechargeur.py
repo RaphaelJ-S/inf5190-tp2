@@ -9,6 +9,9 @@ from app.src.planificateur.parser.parser import Parser, definir_parser
 
 
 class Telechargeur:
+    """
+    S'occupe du téléchargement et du parsing des différentes Sources données.
+    """
 
     def __init__(self, sources: list[Source]):
         self.sources = sources
@@ -16,6 +19,15 @@ class Telechargeur:
     def _telecharger(self, url: str,
                      date_modif: datetime,
                      parser: Parser) -> list[list[str]]:
+        """
+        Télécharge @url et le parse si il y a de nouvelles données.
+        @url : l'url de la source à télécharger.
+        @date_modif : La date de la dernière fois que cette source a été
+        téléchargée.
+        @parser : Le parser a utiliser pour cette source.
+        @return : Les données de la source parsées ou None s'il n'y a pas de
+        changements à apporter.
+        """
         if parser is None:
             raise ValueError("Le parser utilisé n'est pas valide.")
         raw = requests.get(url)
@@ -34,7 +46,11 @@ class Telechargeur:
             raw.headers["Last-Modified"])
         return date_modif < dern_modif
 
-    def start(self):
+    def start(self) -> dict:
+        """
+        Commence le processus de téléchargement de toutes les sources données.
+        @return : Une map des données téléchargés.
+        """
         donnees = {}
         for source in self.sources:
             url = source.url
@@ -43,9 +59,8 @@ class Telechargeur:
 
             print(f"\n\nCommencement du téléchargement de {url}.\n")
             try:
-                site_donnees = self._telecharger(url,
-                                                 datetime.fromisoformat(
-                                                     date_modif), parser)
+                site_donnees = self._telecharger(
+                    url, datetime.fromisoformat(date_modif), parser)
                 if site_donnees is not None:
                     donnees[source.parser] = site_donnees
                 print(f"\n\nTéléchargement de {url} complété.")

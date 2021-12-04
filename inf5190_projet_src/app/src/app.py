@@ -16,6 +16,10 @@ app = Flask(__name__, static_folder="static", static_url_path="")
 
 
 def creer_app():
+    """
+    Configure l'application Flask et créé les tables dans la base de données
+    si elles ne sont pas déjà créées.
+    """
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db/data.db"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
@@ -24,6 +28,10 @@ def creer_app():
 
 
 def get_db():
+    """
+    Retourne une instance singleton de la classe qui s'occupe de communiquer
+    avec la base de données.
+    """
     database = getattr(g, '_database', None)
     if database is None:
         g._database = Base_Donnees(db, app)
@@ -32,7 +40,11 @@ def get_db():
 
 @app.before_first_request
 def initialiser_planificateur():
-    # décommentez pour faire un téléchargement immédiatement après la première requête
+    """
+    Initialise le planificateur qui s'occupe des opérations planifiées.
+    """
+    # décommentez pour faire un téléchargement immédiatement
+    #  après la première requête
     # planificateur = Planificateur(get_db(), 5)
     # décommentez pour changer l'heure de téléchargement à 1 fois / 24h
     planificateur = Planificateur(get_db())
@@ -43,13 +55,20 @@ def initialiser_planificateur():
 
 @app.route("/")
 def accueil():
+    """
+    Page d'accueil de l'application.
+    """
     serv = Service(get_db())
     nom_installations = serv.get_nom_installations()
-    return render_template("form_installations.html", installations=nom_installations)
+    return render_template("form_installations.html",
+                           installations=nom_installations)
 
 
 @app.route("/doc")
 def documentation():
+    """
+    Page de documentation des API de l'application.
+    """
     return render_template("documentation.html")
 
 
@@ -57,6 +76,9 @@ def documentation():
 
 @app.route("/api/installations")
 def selection_installations():
+    """
+    Retourne les installations de l'arrondissement donné en query string.
+    """
     service = Service(get_db())
     try:
         installations = service.get_installations(
@@ -70,6 +92,9 @@ def selection_installations():
 
 @app.route("/api/installation")
 def selection_installation():
+    """
+    Retourne les informations de l'installation donnée en query string.
+    """
     service = Service(get_db())
     try:
         installation = service.get_installation(
