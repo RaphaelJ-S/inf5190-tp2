@@ -1,14 +1,20 @@
+# Ce fichier modélise les informations nécessaires pour définir
+# les envoyant et les destinataires de courriels et de tweets.
+
+# Les information de l'adresse qui envois les courriels
 courriel_envoyant:
   nom: Sender
   email: raphy.inf5190.labo@gmail.com
   mdp: Mhs89pz6zrmfhCg
 
+#Les informations du compte qui publie les tweets.
 compte_twitter:
   cle_consomateur: vwM2f6QSjsCC6MG1auC6WDEkc
   secret_consomateur: U64nw7gEV2IgZErSocUR8Ohtf3YOFLS6vNWXo4ctpksAST8NrN
   cle_acces: 1465737732538474497-IWPBmEjT4SFS0U9eOTozJfYz8TB2B4
   secret_acces: FIPc7ueKQoHOrkm5eGg21sW0tHdp3ogO96tJL9IPJEypl
 
+# Les information des destinataires des courriels.
 courriel_cible:
   - nom: Log
     email: raphy.inf5190.labo@gmail.com

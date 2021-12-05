@@ -2,6 +2,9 @@ from app.src.db.init_db import db
 
 
 class Glissade(db.Model):
+    """
+    Représentation d'une glissade.
+    """
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(50), nullable=False)
     ouvert = db.Column(db.String(1), nullable=False)
@@ -13,10 +16,16 @@ class Glissade(db.Model):
         nullable=True, default="N/A")
 
     def as_partial_list(self) -> list[str]:
+        """
+        Retourne une liste partielle des attributs de la glissade.
+        """
         return [self.ouvert, self.deblaye, self.nom, self.cle, self.date_maj,
                 self.nom_arr]
 
     def as_dict(self) -> dict:
+        """
+        Retourne tous les attributs de la glissade sous forme de dictionnaire.
+        """
         return {
             "id": self.id,
             "nom": self.nom,

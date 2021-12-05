@@ -2,6 +2,9 @@ from app.src.db.init_db import db
 
 
 class Piscine(db.Model):
+    """
+    Représentation d'une piscine
+    """
     id = db.Column(db.Integer, primary_key=True)
     id_uev = db.Column(db.Integer, nullable=False)
     type = db.Column(db.String(50), nullable=False)
@@ -19,11 +22,17 @@ class Piscine(db.Model):
         nullable=True, default="N/A")
 
     def as_partial_list(self) -> list:
+        """
+        Retourne une liste partielle des attributs de la piscine.
+        """
         return [self.id_uev, self.type, self.nom, self.adresse, self.propriete,
                 self.gestion, self.point_x, self.point_y, self.equipement,
                 self.longitude, self.latitude, self.nom_arr]
 
     def as_dict(self) -> dict:
+        """
+        Retourne tous les attributs de la piscine sous forme de dictionnaire.
+        """
         return {
             "id": self.id,
             "id_uev": self.id_uev,

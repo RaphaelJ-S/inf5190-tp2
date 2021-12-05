@@ -6,6 +6,10 @@ from app.src.message.notification.notification import Notification
 
 
 class Courriel(Notification):
+    """
+    Implémente Notification.
+    Contient la mécanique d'envois de courriels.
+    """
 
     def __init__(self, adresse: str, corps: str,
                  notifiant: dict[str]):

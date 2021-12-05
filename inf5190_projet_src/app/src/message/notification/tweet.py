@@ -3,6 +3,10 @@ import tweepy
 
 
 class Tweet(Notification):
+    """
+    Implémente Notification.
+    Contient la mécanique d'envois de tweets.
+    """
 
     def __init__(
             self,

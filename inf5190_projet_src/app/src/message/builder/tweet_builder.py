@@ -4,6 +4,10 @@ from app.src.message.notification.tweet import Tweet
 
 
 class TweetBuilder(NotificationBuilder):
+    """
+    Implémentation de NotificationBuilder.
+    Utilisé pour construire une liste de tweets.
+    """
 
     def __init__(self, compte_twitter):
         self.tweets = []
@@ -13,8 +17,17 @@ class TweetBuilder(NotificationBuilder):
     # classes concrètes de NotificationBuilder
 
     def ajouter_notification(self, dest_info: dict, action: str, donnees: list):
+        """
+        Ajoute un tweet à la liste de tweets.
+        @dest_info : Les informations du message à tweeter.
+        @action : L'action qui cause l'envois d'un tweet.
+        @donnees : inutilisé. Gardé seulement à cause de l'interface.
+        """
         corps = f"{action} de l'installation {str(dest_info)}"
         self.tweets.append(Tweet(corps, self.compte))
 
     def assembler(self) -> list[Notification]:
+        """
+        Retourne la liste des tweets créés qui doivent être envoyés.
+        """
         return self.tweets

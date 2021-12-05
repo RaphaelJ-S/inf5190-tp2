@@ -2,6 +2,9 @@ from app.src.db.init_db import db
 
 
 class Source(db.Model):
+    """
+    Représentation d'une source d'informations à télécharger.
+    """
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(500), unique=True, nullable=False)
     parser = db.Column(db.String(50), nullable=False)

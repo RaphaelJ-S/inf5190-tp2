@@ -4,6 +4,9 @@ from app.src.message.notification.notification import Notification
 
 
 class NotificationBuilder(ABC):
+    """
+    Interface Builder pour la construction de notifications.
+    """
 
     @abstractmethod
     def ajouter_notification(self, dest_info: dict,

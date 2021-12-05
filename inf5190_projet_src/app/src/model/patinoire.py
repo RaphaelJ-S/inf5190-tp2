@@ -2,6 +2,9 @@ from app.src.db.init_db import db
 
 
 class Patinoire(db.Model):
+    """
+    Représentation d'une patinoire.
+    """
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(30), nullable=False)
     date_heure = db.Column(db.String(20), nullable=False)
@@ -13,10 +16,16 @@ class Patinoire(db.Model):
         nullable=True, default="N/A")
 
     def as_partial_list(self) -> list:
+        """
+        Retourne une liste partielle des attributs de la glissade.
+        """
         return [self.date_heure, self.deblaye, self.nom, self.arrose,
                 self.resurface, self.nom_arr]
 
     def as_dict(self) -> dict:
+        """
+        Retourne tous les attributs de la glissade sous forme de dictionnaire.
+        """
         return {
             "id": self.id,
             "nom": self.nom,

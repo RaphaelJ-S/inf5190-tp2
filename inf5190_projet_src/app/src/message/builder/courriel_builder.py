@@ -6,6 +6,10 @@ from app.src.message.notification.notification import Notification
 
 
 class CourrielBuilder(NotificationBuilder):
+    """
+    Implémentation de NotificationBuilder.
+    Utilisé pour construire une liste de courriels.
+    """
 
     def __init__(self, adresse_source):
         self.courriels = []
@@ -13,6 +17,14 @@ class CourrielBuilder(NotificationBuilder):
 
     def ajouter_notification(self, dest_info: dict,
                              action: str, donnees: list):
+        """
+        Ajoute un courriel à la liste finale.
+        @dest_info : les informations du destinataire
+        (nom, adresse, arrondissements).
+        @action : L'action qui cause l'envois d'une notification
+        ('ajout', 'suppression', 'modification')
+        @donnees : Les informations à envoyer.
+        """
         try:
             adresse = dest_info["email"]
             nom = dest_info["nom"]
@@ -27,6 +39,15 @@ class CourrielBuilder(NotificationBuilder):
 
     def former_corps(self, action: str, donnees: list,
                      nom: str, liste_arr: list[str]) -> str:
+        """
+        Retourne le 'corps' du courriel.
+        @action : L'action qui cause l'envois d'une notification
+        ('ajout','suppression', 'modification')
+        @donnees : Les informations à envoyer.
+        @nom : Le nom du destinataire.
+        @liste_arr : Les arrondissements qui intéressent le destinataire.
+        @return : Le message à envoyer au destinataire.
+        """
         token = uuid.uuid4().hex
         msg = f"""Bonjour {nom}.\n
         Des changements ont été apportés aux installations d'un
@@ -40,7 +61,17 @@ class CourrielBuilder(NotificationBuilder):
 
     def filtrer_arrondissement(self, donnees: list,
                                liste_arr: list[str]) -> list:
+        """
+        Filtre les données selon les arrondissements
+        qui intéressent le destinataire.
+        @donnees : Les donnees à envoyer.
+        @liste_arr : Les arrondissements qui intéressent le destinataire.
+        @return : Les données filtrées.
+        """
         return donnees
 
     def assembler(self) -> list[Notification]:
+        """
+        Retourne la liste des courriels prêts à être envoyés.
+        """
         return self.courriels
