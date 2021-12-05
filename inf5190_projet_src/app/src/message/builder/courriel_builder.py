@@ -55,7 +55,7 @@ class CourrielBuilder(NotificationBuilder):
         \n\n {action} des installations suivantes : \n\n"""
         for donnee in self.filtrer_arrondissement(donnees, liste_arr):
             msg += str(donnee) + "\n"
-        msg += f"""\n\nPour arrêter ces notifications, cliquez sur le lien 
+        msg += f"""\n\nPour arrêter ces notifications, cliquez sur le lien
         suivant : http://localhost/desabonne/{token} \n"""
         return msg
 

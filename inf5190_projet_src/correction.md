@@ -36,7 +36,7 @@ Il n'est pas nécessaire de créer la base de données au préalable ou d'ajoute
 
 ### A2
 
-Il n'y a pas vraiment de moyens de tester cette fonctionnalité à moins de changer les paramètres du 'cron' à une autre heure. On peut regarder dans le code pour s'assurer que ce sont les bons paramètres. Comme l'horloge de la machine virtuelle est en UTC, le cron l'est aussi. Dans app/src/planificateur/planificateur.py, dans la fonction 'run', on peut voir que la version 'cron' du travail est planifiée pour l'heure zéro, qui est minuit.
+Il n'y a pas vraiment de moyens de tester cette fonctionnalité à moins de changer les paramètres du 'cron' à une autre heure. On peut regarder dans le code pour s'assurer que ce sont les bons paramètres. Comme l'horloge de la machine virtuelle est en UTC, le cron l'est aussi. Dans app/src/planificateur/planificateur.py, dans la fonction 'run', on peut voir que la version 'cron' du travail est planifiée pour l'heure zéro, qui est minuit. Si on veut tester que la classe Planificateur fonctionne, on peut faire la première étape du point A1.
 
 ### A3
 
@@ -44,15 +44,22 @@ Lancez l'application avec `make` à la racine du travail. Ouvrez une page à l'a
 
 ### A4
 
+Lancez l'application avec `make` à la racine du travail. Ouvrez une page à l'adresse `127.0.0.1:5000/installations?arrondissement=Verdun`, ce qui envoit une requête asynchrone à `/api/installations`. Vous devriez voir une liste de dictionnaires s'afficher représentant les différentes installations de l'arrondissement Verdun.
+
 ### A5
 
+Lancez l'application avec `make` à la racine du travail. Ouvrez une page à l'adresse `127.0.0.1:5000/`. Vous devriez voir un formulaire s'afficher à l'écran. Le champ qui permet d'écrire quelque chose est celui qui envoit une
+requête à A4. Vous pouvez écrire ce que vous voulez, l'application va vous retourner une liste des noms d'arrondissements valides. Entrez un des nom et les différentes installations devraient apparaitres. Il faut bien entendu que le téléchargement des sources ait eu lieu pour que ce point fonctionne.
+
 ### A6
+
+Lancez l'application avec `make` à la racine du travail. Ouvrez une page à l'adresse `127.0.0.1:5000/`. Vous devriez voir un formulaire s'afficher à l'écran. Le champ 'select' est celui qui envoit une requête à `/api/installation`, choisissez donc un nom d'installation et l'installation devrait apparaitre. Il faut bien entendu que le téléchargement des sources ait eu lieu pour que ce point fonctionne.
 
 ### B1
 
 Suite à la création initiale de la base de données, il ne devrait pas être nécessaire de faire des modification. Toutes les installations devraient être considérées comme étant de nouvelles installations et, par conséquent, être envoyées dans un courriel aux adresses contenues dans le fichier app/src/fichier/dest_courriel.yaml. Vous pouvez soit ajouter une adresse à laquelle vous avez accès dans ce fichier(en respectant le format) ou simplement utiliser la première adresse du fichier. Cette adresse est celle qui envoit tous les courriels et elle s'envoie aussi chaque courriel.
 
-Vous pouvez aussi remplacer l'adresse courriel dans le fichier de configuration `app/src/fichier/dest_courriel.yaml`. Le premier objet représente l'adresse courriel et les spécifications du compte Twitter et le deuxième représente les destinataires des courriels.
+Vous pouvez aussi remplacer l'adresse courriel dans le fichier de configuration `app/src/fichier/dest_courriel.yaml`. Le premier objet représente l'adresse qui va envoyer les courriels, le deuxième objet représente les informations nécessaire pour publié sur un compte twitter et le troisième objet est une liste de toutes les adresses cibles et leurs informations.
 
 ### B2
 

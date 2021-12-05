@@ -42,7 +42,8 @@ class Test_MAJ(unittest.TestCase):
         anc_donnees = [["un", "deux", "nom1"], ["deux", "trois", "nom2"], [
             "un", "quatre", "nom3"], ["cinq", "dix", "nom4"]]
         nv_donnees = [["un", "deux", "nom1"], ["deux", "trois", "nom2"], [
-            "un", "quatre", "nom3"], ["cinq", "dix", "nom4"], ["deux", "deux", "nom5"]]
+            "un", "quatre", "nom3"], ["cinq", "dix", "nom4"],
+            ["deux", "deux", "nom5"]]
 
         changements = self.maj._diff_installation(anc_donnees, nv_donnees)
 
@@ -53,7 +54,8 @@ class Test_MAJ(unittest.TestCase):
     def test_diff_installations_2ajout(self):
         anc_donnees = [["un", "deux", "nom1"], ["deux", "trois", "nom2"], [
             "un", "quatre", "nom3"], ["cinq", "dix", "nom4"]]
-        nv_donnees = [["deux", "deux", "nom5"], ["un", "deux", "nom1"], ["sept", "quinze", "nom6"], ["deux", "trois", "nom2"], [
+        nv_donnees = [["deux", "deux", "nom5"], ["un", "deux", "nom1"],
+                      ["sept", "quinze", "nom6"], ["deux", "trois", "nom2"], [
             "un", "quatre", "nom3"], ["cinq", "dix", "nom4"]]
 
         changements = self.maj._diff_installation(anc_donnees, nv_donnees)
@@ -64,16 +66,20 @@ class Test_MAJ(unittest.TestCase):
 
     def test_diff_installations_5ajout(self):
         anc_donnees = []
-        nv_donnees = [["deux", "deux", "nom5"], ["sept", "quinze", "nom6"], ["deux", "trois", "nom2"], [
+        nv_donnees = [["deux", "deux", "nom5"], ["sept", "quinze", "nom6"],
+                      ["deux", "trois", "nom2"], [
             "un", "quatre", "nom3"], ["cinq", "dix", "nom4"]]
         changements = self.maj._diff_installation(anc_donnees, nv_donnees)
-        self.assertEqual(changements[0], [["deux", "deux", "nom5"], ["sept", "quinze", "nom6"], ["deux", "trois", "nom2"], [
+        self.assertEqual(changements[0], [["deux", "deux", "nom5"],
+                                          ["sept", "quinze", "nom6"],
+                                          ["deux", "trois", "nom2"], [
             "un", "quatre", "nom3"], ["cinq", "dix", "nom4"]])
         self.assertFalse(changements[1])
         self.assertFalse(changements[2])
 
     def test_diff_installations_1supp(self):
-        anc_donnees = [["deux", "deux", "nom5"], ["sept", "quinze", "nom6"], ["deux", "trois", "nom2"], [
+        anc_donnees = [["deux", "deux", "nom5"], ["sept", "quinze", "nom6"],
+                       ["deux", "trois", "nom2"], [
             "un", "quatre", "nom3"], ["cinq", "dix", "nom4"]]
         nv_donnees = [["deux", "deux", "nom5"], ["sept", "quinze", "nom6"], [
             "un", "quatre", "nom3"], ["cinq", "dix", "nom4"]]
@@ -84,7 +90,8 @@ class Test_MAJ(unittest.TestCase):
         self.assertFalse(changements[2])
 
     def test_diff_installations_2supp(self):
-        anc_donnees = [["deux", "deux", "nom5"], ["sept", "quinze", "nom6"], ["deux", "trois", "nom2"], [
+        anc_donnees = [["deux", "deux", "nom5"], ["sept", "quinze", "nom6"],
+                       ["deux", "trois", "nom2"], [
             "un", "quatre", "nom3"], ["cinq", "dix", "nom4"]]
         nv_donnees = [["deux", "deux", "nom5"], [
             "un", "quatre", "nom3"], ["deux", "trois", "nom2"]]
@@ -95,12 +102,15 @@ class Test_MAJ(unittest.TestCase):
         self.assertFalse(changements[2])
 
     def test_diff_installations_5supp(self):
-        anc_donnees = [["deux", "deux", "nom5"], ["sept", "quinze", "nom6"], ["deux", "trois", "nom2"], [
+        anc_donnees = [["deux", "deux", "nom5"], ["sept", "quinze", "nom6"],
+                       ["deux", "trois", "nom2"], [
             "un", "quatre", "nom3"], ["cinq", "dix", "nom4"]]
         nv_donnees = []
         changements = self.maj._diff_installation(anc_donnees, nv_donnees)
         self.assertFalse(changements[0])
-        self.assertEqual(changements[1], [["deux", "deux", "nom5"], ["sept", "quinze", "nom6"], ["deux", "trois", "nom2"], [
+        self.assertEqual(changements[1], [["deux", "deux", "nom5"],
+                                          ["sept", "quinze", "nom6"],
+                                          ["deux", "trois", "nom2"], [
             "un", "quatre", "nom3"], ["cinq", "dix", "nom4"]])
         self.assertFalse(changements[2])
 

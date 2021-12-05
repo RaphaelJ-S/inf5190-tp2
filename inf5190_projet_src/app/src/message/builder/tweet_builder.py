@@ -16,7 +16,8 @@ class TweetBuilder(NotificationBuilder):
     # attention à la conception et qu'il y a des incohérences entres les
     # classes concrètes de NotificationBuilder
 
-    def ajouter_notification(self, dest_info: dict, action: str, donnees: list):
+    def ajouter_notification(self, dest_info: dict,
+                             action: str, donnees: list):
         """
         Ajoute un tweet à la liste de tweets.
         @dest_info : Les informations du message à tweeter.

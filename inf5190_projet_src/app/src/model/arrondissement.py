@@ -19,7 +19,8 @@ class Arrondissement(db.Model):
 
     def as_dict(self):
         """
-        Retourne l'id et le nom de l'arrondissement sous forme de dictionnaire id:X, nom:Y
+        Retourne l'id et le nom de l'arrondissement sous
+        forme de dictionnaire id:X, nom:Y
         """
         return {
             "id": self.id,
