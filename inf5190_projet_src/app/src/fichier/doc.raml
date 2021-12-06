@@ -34,6 +34,11 @@ types:
             cle:string
             date_maj:string
             nom_arr:string
+    NouveauProfil:
+        properties:
+            nom: string
+            email: string
+            liste_arr: string[]
 
 
 /api:
@@ -98,21 +103,55 @@ types:
                              }
                 400:
                     description: Le paramètre 'arrondissement' n'a pas été donné.
-                    body:
-                        application/json:
-                            type: |
-                                string
-                            exemple:|
-                                {"Vous devez fournir le paramètre 'arrondissement'."}
-
                 404:
                     description: L'arrondissement donné en paramètre n'a pas été trouvé.
+    /installation:
+        get:
+            description: Retourne l'installation correspondant au nom donné en paramètre.
+            queryParameters:
+                installation:
+                    type:string
+                    required:true
+            responses:
+                200:
+                    description: L'opération s'est déroulée avec succès
                     body:
                         application/json:
                             type: |
-                                string
-                            exemple:|
-                                {"L'arrondissement que vous avec fourni n'est pas valide. Veuillez entrer une des options suivantes : <liste d'arrondissements>"}
+                                Glissade
+                                Piscine
+                                Patinoire
+                        
+
+                400:
+                    description: Le paramètre 'installation' n'a pas été donné.
+
+                404:
+                    description: Le nom de l'installation n'est pas valide.
+
+    /profil:
+        post:
+            description:
+            body:
+                type: |
+                    NouveauProfil
+                example: |
+                    {
+                        "nom":"Jacque",
+                        "email":"fictif@courrier.com",
+                        "liste_arr": [
+                            "Verdun",
+                            "LaSalle",
+                            "Le Sud-Ouest"
+                        ]
+                    }
+            responses:
+                200:
+                    description: 
+                201:
+                    description: Le nouveau profil a été créé avec succès.
+                400:
+                    description: Il y a une/des erreurs dans la requête.
 
 
 

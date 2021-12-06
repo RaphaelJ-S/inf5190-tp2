@@ -16,6 +16,7 @@ Les fonctionnalités réalisée pour ce travail sont les suivantes :
 
 - A1, A2, A3, A4, A5, A6
 - B1, B2
+- E1, E2, E3
 
 Comme la base de données va devoir être créée et remplie lors du départ de l'application et que ces opérations vont être réalisées automatiquement, il serait préférable de changer les configurations nécessaires(Changer l'adresse courriel de l'envoyant pour le cas B1 et le compte Twitter si nécessaire) pour les tests avant de partir l'application.
 
@@ -65,3 +66,9 @@ Vous pouvez aussi remplacer l'adresse courriel dans le fichier de configuration 
 
 Un compte d'application Twitter permet un nombre limité de requêtes(50 par 15 minutes) ce qui est largement dépassé lors du téléchargement initial suite à la création
 de la base de données. Vous devriez voir des messages d'erreurs apparaitre sur la console pour vous informer que la limite est dépassée. Pour vous assurer que les tweets ont bien été publiés, vous pouvez vous rendre sur le compte twitter @INF5190Montreal.
+
+### E1
+
+### E2
+
+### E3

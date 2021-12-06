@@ -1,0 +1,52 @@
+{% extends "main.html" %}{% block content%}
+
+<h1>Création d'un profil</h1>
+<div class="formulaire container">
+  <form class="formulaire-profil">
+    <div class="form-group mb-3">
+      <label for="nom-profil" class="form-label">Nom</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nom-profil"
+        name="nom"
+        placeholder="Entrez votre nom"
+      />
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="courriel-profil" class="form-label">Courriel</label>
+      <input
+        type="text"
+        class="form-control"
+        id="courriel-profil"
+        aria-describedby="courrielAide"
+        name="email"
+        placeholder="Entrez votre adresse courriel"
+      />
+      <div class="form-text" id="courrielAide">
+        Cette adresse recevera les mises à jours aux installations des
+        arrondissements que vous sélectionnerez plus bas
+      </div>
+    </div>
+    <span class="msg-erreur cache">&nbsp;</span>
+
+    <div class="select-arr mb-3">
+      <h3>Liste d'arrondissements que vous voulez suivre</h3>
+      <button type="button" class="ajouter-arr btn btn-dark mb-3">
+        Ajouter un arrondissement à la liste
+      </button>
+      <button type="button" class="supprimer-arr btn btn-danger mb-3">
+        Supprimer un arrondissement de la liste
+      </button>
+      <div class="liste-arr"></div>
+    </div>
+
+    <button type="button" class="soumission btn btn-primary">
+      Créer ce profil
+    </button>
+  </form>
+  <script src="/js/profil.js"></script>
+</div>
+
+{% endblock %}

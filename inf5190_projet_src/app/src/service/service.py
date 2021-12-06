@@ -1,5 +1,6 @@
 
 from app.src.db.base_donnees import Base_Donnees
+import yaml
 
 
 class Service:
@@ -111,3 +112,26 @@ class Service:
                 "glissades": [glis[1].as_dict() for glis in glissades]
             }
             return installations
+
+    def creer_nouveau_profil(self, nom_fichier: str, nv_profil: dict):
+        """
+        Crée un nouveau profil d'utilisateur dans le fichier @nom_fichier.
+        Lance une ValueError si un/des noms d'arrondissements ne sont pas
+        valides.
+        @nom_fichier : Le chemin du fichier de configuration.
+        @nv_profil : Le nouveau profil à ajouter.
+        """
+        with open(nom_fichier, "r") as fichier:
+            contenu = yaml.safe_load(fichier)
+        nom_arr = self.get_noms_arrondissements()
+        sont_arrondissements_valides = all(arr in nom_arr for
+                                           arr in nv_profil["liste_arr"])
+        if sont_arrondissements_valides:
+            contenu["courriel_cible"].append(nv_profil)
+            with open(nom_fichier, "w") as fichier:
+                yaml.safe_dump(contenu, fichier, encoding="utf-8")
+        else:
+            raise ValueError(f"""
+            Il y a une/des erreurs dans la liste d'arrondissement. Les noms
+            d'arrondissements valides sont : {nom_arr}.
+            """)

@@ -7,8 +7,8 @@ class Glissade(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(50), nullable=False)
-    ouvert = db.Column(db.String(1), nullable=False)
-    deblaye = db.Column(db.String(1), nullable=False)
+    ouvert = db.Column(db.String(1))
+    deblaye = db.Column(db.String(1))
     cle = db.Column(db.String(10), nullable=False)
     date_maj = db.Column(db.String(30), nullable=False)
     nom_arr = db.Column(db.String(50), db.ForeignKey(

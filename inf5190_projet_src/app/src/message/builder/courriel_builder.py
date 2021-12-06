@@ -68,7 +68,7 @@ class CourrielBuilder(NotificationBuilder):
         @liste_arr : Les arrondissements qui intéressent le destinataire.
         @return : Les données filtrées.
         """
-        return donnees
+        return [donnee for donnee in donnees if donnee.nom_arr in liste_arr]
 
     def assembler(self) -> list[Notification]:
         """

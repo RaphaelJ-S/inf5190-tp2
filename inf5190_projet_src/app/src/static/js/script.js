@@ -19,7 +19,6 @@ btn.addEventListener("click", async (event) => {
 select.addEventListener("change", async (event) => {
   try {
     const body = await send_nom(event);
-    console.log(body);
     afficher_installations(body);
   } catch (erreur) {
     afficher_erreur(erreur);
@@ -80,6 +79,7 @@ const afficher_erreur = (erreur) => {
   former_patinoires([]);
   paragraphe.innerHTML =
     "Une erreur s'est produite lors de votre requête : " + erreur.message;
+  paragraphe.classList.remove("cache");
 };
 
 const former_glissades = (glissades) => {
@@ -184,7 +184,6 @@ const former_patinoires = (patinoires) => {
 
 const former_piscines = (piscines) => {
   table = "";
-  console.log(piscines);
   if (piscines !== undefined && piscines !== null && piscines.length > 0) {
     header =
       "<h3>Piscines</h3>" +
@@ -257,4 +256,5 @@ const former_piscines = (piscines) => {
 
 const reset_erreur = () => {
   paragraphe.innerHTML = "&nbsp;";
+  paragraphe.classList.add("cache");
 };
