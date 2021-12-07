@@ -1,4 +1,5 @@
 
+from itsdangerous import URLSafeSerializer, URLSafeTimedSerializer
 from app.src.db.base_donnees import Base_Donnees
 import yaml
 
@@ -135,3 +136,29 @@ class Service:
             Il y a une/des erreurs dans la liste d'arrondissement. Les noms
             d'arrondissements valides sont : {nom_arr}.
             """)
+
+    def supprimer_profil(self, nom_fichier: str, token: str) -> bool:
+        """
+        Supprime le profil dans @nom_fichier identifié par @adresse et @nom.
+        @nom_fichier : Le nom du fichier qui contient les profils.
+        @token : Le token représentant le profil à supprimer.
+        """
+
+        url_safe = URLSafeTimedSerializer("sec_messagerie")
+        adresse, nom = url_safe.loads(token, max_age=36000)
+        contenu = self.contenu_fichier(nom_fichier)
+        a_pas_supp = [profil for profil in contenu["courriel_cible"]
+                      if profil["nom"] != nom and profil["email"] != adresse]
+        contenu["courriel_cible"] = a_pas_supp
+        with open(nom_fichier, "w") as fichier:
+            yaml.safe_dump(contenu, fichier, encoding="utf-8")
+
+    def contenu_fichier(self, nom_fichier: str) -> dict:
+        """
+        Retourne le contenu du fichier yaml @nom_fichier.
+        @nom_fichier : Le nom du fichier yaml à lire.
+        @return : Le contenu du fichier.
+        """
+        with open(nom_fichier, "r") as fichier:
+            contenu = yaml.safe_load(fichier)
+        return contenu

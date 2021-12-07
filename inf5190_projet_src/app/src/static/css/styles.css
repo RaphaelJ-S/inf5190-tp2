@@ -37,6 +37,20 @@ body {
   overflow-y: scroll;
   max-height: 90vh;
 }
+
+.erreur {
+  display: flex;
+  justify-content: center;
+}
+
+.erreur p {
+  font-size: 3em;
+}
+
+.erreur span {
+  font-size: 9em;
+}
+
 #toggle-sidebar-btn {
   position: absolute;
   top: -1000px;

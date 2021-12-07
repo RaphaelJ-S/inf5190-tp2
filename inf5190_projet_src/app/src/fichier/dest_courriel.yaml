@@ -4,42 +4,47 @@ compte_twitter:
   secret_acces: FIPc7ueKQoHOrkm5eGg21sW0tHdp3ogO96tJL9IPJEypl
   secret_consomateur: U64nw7gEV2IgZErSocUR8Ohtf3YOFLS6vNWXo4ctpksAST8NrN
 courriel_cible:
-  - email: raphy.inf5190.labo@gmail.com
-    liste_arr:
-      - Ahuntsic-Cartierville
-      - "Rivi\xE8re-des-Prairies-Pointe-aux-Trembles"
-      - Le Sud-Ouest
-      - Verdun
-      - Saint-Laurent
-      - LaSalle
-      - Le Plateau-Mont-Royal
-      - Ville-Marie
-      - Rosemont-La Petite-Patrie
-      - Mercier-Hochelaga-Maisonneuve
-      - Lachine
-      - "Montr\xE9al-Nord"
-      - "L'Ile-Bizard-Sainte-Genevi\xE8ve"
-      - Villeray-Saint-Michel-Parc-Extension
-      - "C\xF4te-des-Neiges-Notre-Dame-de-Gr\xE2ce"
-      - "Saint-L\xE9onard"
-      - Anjou
-      - Outremont
-      - Ahuntsic-Cartierville
-      - Pierrefonds-Roxboro
-      - Villeray-Saint-Michel-Parc-Extension
-    nom: Log
-  - email: invalide.chose@gmail.com
-    liste_arr:
-      - Saint-Laurent
-      - "Montr\xE9al-Nord"
-    nom: Chose
-  - email: invalide.chose@gmail.com
-    liste_arr:
-      - Saint-Léonard
-      - Saint-Laurent
-      - Le Plateau-Mont-Royal
-    nom: Chose
-
+- email: raphy.inf5190.labo@gmail.com
+  liste_arr:
+  - Ahuntsic-Cartierville
+  - "Rivi\xE8re-des-Prairies-Pointe-aux-Trembles"
+  - Le Sud-Ouest
+  - Verdun
+  - Saint-Laurent
+  - LaSalle
+  - Le Plateau-Mont-Royal
+  - Ville-Marie
+  - Rosemont-La Petite-Patrie
+  - Mercier-Hochelaga-Maisonneuve
+  - Lachine
+  - "Montr\xE9al-Nord"
+  - "L'Ile-Bizard-Sainte-Genevi\xE8ve"
+  - Villeray-Saint-Michel-Parc-Extension
+  - "C\xF4te-des-Neiges-Notre-Dame-de-Gr\xE2ce"
+  - "Saint-L\xE9onard"
+  - Anjou
+  - Outremont
+  - Ahuntsic-Cartierville
+  - Pierrefonds-Roxboro
+  - Villeray-Saint-Michel-Parc-Extension
+  nom: Log
+- email: invalide.chose@gmail.com
+  liste_arr:
+  - Saint-Laurent
+  - "Montr\xE9al-Nord"
+  nom: Chose
+- email: invalide.chose@gmail.com
+  liste_arr:
+  - "Saint-L\xE9onard"
+  - Saint-Laurent
+  - Le Plateau-Mont-Royal
+  nom: Chose
+- email: test@courrier.com
+  liste_arr:
+  - Saint-Laurent
+  - Verdun
+  - Le Sud-Ouest
+  nom: Jacque
 courriel_envoyant:
   email: raphy.inf5190.labo@gmail.com
   mdp: Mhs89pz6zrmfhCg

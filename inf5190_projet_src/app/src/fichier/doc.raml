@@ -131,7 +131,7 @@ types:
 
     /profil:
         post:
-            description:
+            description: Création d'un nouveau profil pour la réception de notifications.
             body:
                 type: |
                     NouveauProfil
@@ -147,11 +147,42 @@ types:
                     }
             responses:
                 200:
-                    description: 
+                    description: Les données n'ont pas le bon format.
                 201:
                     description: Le nouveau profil a été créé avec succès.
                 400:
                     description: Il y a une/des erreurs dans la requête.
+
+    /arrondissements:
+        get:
+            desription: Retourne le nom de tous les arrondissements.
+            responses:
+                200:
+                    description: Une liste contenant le nom de tous les arrondissements.
+                    body: 
+                        application/json:
+                            type: string[]
+                            example: |
+                            [
+                                "Verdun",
+                                "Saint-Laurent",
+                                "Côte-des-Neiges"
+                            ]
+                            
+
+    /desabonnement/{token}:
+        uriParameters:
+            token:
+                description:Chaîne de caractères unique identifiant un profil.
+                required:true
+        delete:
+            description: Suppression du profil identifié par token.
+            responses:
+                200:
+                    description: Le profil a été supprimé avec succès.
+                400:
+                    description: Une erreur s'est produite.
+            
 
 
 

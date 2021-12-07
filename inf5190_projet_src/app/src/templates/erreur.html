@@ -1,0 +1,15 @@
+{% extends "main.html" %} {% block content %}
+
+<div class="container-fluid erreur-wrapper">
+  <div class="erreur container">
+    <div>
+      <div class="erreur-header">
+        <span>{{erreur}}</span>
+      </div>
+      <p class="erreur-texte">Oups! Une erreur est survenue.</p>
+      <a href="/" class="btn btn-primary">Retourner à la page d'accueil </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

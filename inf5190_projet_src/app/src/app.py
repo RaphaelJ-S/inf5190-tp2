@@ -6,6 +6,7 @@ from flask import redirect
 from flask.helpers import make_response
 from flask.json import jsonify
 from flask.templating import render_template
+from itsdangerous import BadSignature
 from flask_json_schema import JsonSchema
 from flask_json_schema import JsonValidationError
 
@@ -17,6 +18,9 @@ from app.src.schema.schema import nv_profil_schema
 
 app = Flask(__name__, static_folder="static", static_url_path="")
 schema = JsonSchema(app)
+
+# fichier de configuration yaml pour les courriels et les tweets
+FICH_YAML = "app/src/fichier/dest_courriel.yaml"
 
 
 def creer_app():
@@ -49,9 +53,9 @@ def initialiser_planificateur():
     """
     # décommentez pour faire un téléchargement immédiatement
     #  après la première requête
-    planificateur = Planificateur(get_db(), 5)
+    # planificateur = Planificateur(get_db(), 5)
     # décommentez pour changer l'heure de téléchargement à 1 fois / 24h
-    # planificateur = Planificateur(get_db())
+    planificateur = Planificateur(get_db())
     planificateur.run()
 
 
@@ -78,17 +82,18 @@ def documentation():
 
 @app.route("/profil", methods=["GET"])
 def formulaire_profil():
+    """
+    Page de création d'un profil.
+    """
     return render_template("form_profil.html")
 
 
-# @app.route("/profil", methods=["POST"])
-# def ajouter_profil():
-#     nom = request.form["nom"]
-#     email = request.form["email"]
-#     liste_arr = request.form["liste_arr"]
-#     print(nom)
-#     print(email)
-#     print(liste_arr)
+@app.route("/desabonnement/<token>")
+def desabonnement(token):
+    """
+    Page de confirmation d'un desabonnement.
+    """
+    return render_template("desabonnement.html")
 
 
 # API
@@ -96,6 +101,9 @@ def formulaire_profil():
 
 @app.route("/api/arrondissements")
 def tous_arrondissements():
+    """
+    Retourne le nom de tous les arrondissements.
+    """
     service = Service(get_db())
     arrondissements = service.get_noms_arrondissements()
     return jsonify(arrondissements)
@@ -143,19 +151,47 @@ def creer_profil():
     """
     nouveau_profil = request.get_json()
     service = Service(get_db())
-    nom_fichier = "app/src/fichier/dest_courriel.yaml"
     try:
-        service.creer_nouveau_profil(nom_fichier, nouveau_profil)
+        service.creer_nouveau_profil(FICH_YAML, nouveau_profil)
     except ValueError as ve:
         return make_response(jsonify(ve.args), 400)
     return make_response(jsonify("Le nouveau profil a été créé avec succès"),
                          201)
 
 
+@app.route("/api/desabonnement/<token>", methods=["DELETE"])
+def supprimer_profil(token):
+    """
+    Supprime tous les profils correspondants à @token.
+    @token : L'identifiant d'un profil.
+    """
+    service = Service(get_db())
+    try:
+        service.supprimer_profil(FICH_YAML, token)
+    except OSError as ose:
+        return jsonify(ose.args), 500
+    except BadSignature or ValueError as err:
+        return jsonify(err.args), 400
+
+    return make_response(jsonify("Profil supprimé avec succès"), 200)
+
+
 @app.errorhandler(JsonValidationError)
 def validation(erreur):
     erreurs = [err.message for err in erreur.errors]
     return jsonify({"erreur": erreur.message, "erreurs": erreurs})
+
+
+@app.errorhandler(400)
+@app.errorhandler(404)
+@app.errorhandler(405)
+@app.errorhandler(500)
+def erreur_handler(erreur):
+    if request.path.startswith("/api/"):
+        return jsonify(str(erreur)), erreur.code
+    else:
+        print(erreur.code)
+        return render_template("erreur.html", erreur=erreur.code)
 
 
 def main():
