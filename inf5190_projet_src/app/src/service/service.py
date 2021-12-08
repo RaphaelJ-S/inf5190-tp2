@@ -58,7 +58,8 @@ class Service:
         piscines = [piscine.nom for piscine in piscines]
         patinoires = [patinoire.nom for patinoire in patinoires]
         glissades = [glissade.nom for glissade in glissades]
-        return piscines + patinoires + glissades
+        final = list(set(piscines + patinoires + glissades))
+        return final
 
     def get_installation(self, nom_installation: str) -> dict:
         """
@@ -74,15 +75,15 @@ class Service:
             raise TypeError(
                 "Vous devez fournir le paramètre 'installation'."
             )
-        patinoire = self.db.get_patinoire_avec_nom(nom_installation)
-        piscine = self.db.get_piscine_avec_nom(nom_installation)
-        glissade = self.db.get_glissade_avec_nom(nom_installation)
-        if patinoire is None and piscine is None and glissade is None:
+        patinoires = self.db.get_patinoire_avec_nom(nom_installation)
+        piscines = self.db.get_piscine_avec_nom(nom_installation)
+        glissades = self.db.get_glissade_avec_nom(nom_installation)
+        if not patinoires and not piscines and not glissades:
             raise ValueError("Ce nom d'installation n'est pas valide.")
         return {
-            "piscines": None if piscine is None else [piscine.as_dict()],
-            "patinoires": None if patinoire is None else [patinoire.as_dict()],
-            "glissades": None if glissade is None else [glissade.as_dict()]
+            "piscines": [piscine.as_dict() for piscine in piscines],
+            "patinoires": [patinoire.as_dict() for patinoire in patinoires],
+            "glissades": [glissade.as_dict() for glissade in glissades]
         }
 
     def get_installations(self, arrondissement: str) -> dict:

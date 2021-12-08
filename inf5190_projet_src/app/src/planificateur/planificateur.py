@@ -71,4 +71,5 @@ class Planificateur:
         maj = MAJ(service)
         changements = maj.trouver_diff_installations(nv_donnees)
         liste_nom_table = maj.effectuer_changements(changements)
+        # Commentez la prochaine si vous voulez que le planificateur effectue toujours une vérification des données.
         self.db.maj_date_sources(liste_nom_table)

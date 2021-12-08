@@ -58,21 +58,21 @@ class Base_Donnees:
         Retourne la piscine avec le nom @nom_installation.
         """
         with self.app.app_context():
-            return Piscine.query.filter_by(nom=nom_installation).first()
+            return Piscine.query.filter_by(nom=nom_installation).all()
 
     def get_patinoire_avec_nom(self, nom_installation: str) -> Patinoire:
         """
         Retourne la patinoire avec le nom @nom_installation.
         """
         with self.app.app_context():
-            return Patinoire.query.filter_by(nom=nom_installation).first()
+            return Patinoire.query.filter_by(nom=nom_installation).all()
 
     def get_glissade_avec_nom(self, nom_installation: str) -> Glissade:
         """
         Retourne la glissade avec le nom @nom_installation.
         """
         with self.app.app_context():
-            return Glissade.query.filter_by(nom=nom_installation).first()
+            return Glissade.query.filter_by(nom=nom_installation).all()
 
     def get_arrondissement_avec_nom(self, nom: str) -> Arrondissement:
         """
