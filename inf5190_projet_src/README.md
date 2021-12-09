@@ -44,7 +44,9 @@ Par défaut, l'application s'exécute sur `http://127.0.0.1:5000/`.
 
 - À noter que la table `source` garde en mémoire la dernière date des modifications ce qui veut dire que si vous faites des modifications directement dans la base de données alors que les dates sont à jours, l'application ne se rendra pas compte qu'il faut faire une vérification. Si vous voulez que le planificateur effectue toujours une vérification des données, regardez la fonction mise_a_jour dans le ficheir app/src/planificateur/planificateur.py et effectuez le changement décrit avant de lancer l'application.
 
-- Le planificateur commence son travail seulement après la première requête reçue par le serveur. Il faut donc ouvrir une page web `http://127.0.0.1:5000/` pour que les opérations planifiées s'exécutent. Ces opération sont aussi planifiée pour être exécutées seulement à minuit, lire le fichier correction.md pour plus de détails.
+- Le planificateur(la partie du projet qui s'occupe du téléchargement des données) commence dès que vous partez l'application et ses deux 'jobs' sont intialalisée: immédiatement(une seule fois) et à chaque jour à minuit.
+
+- Le fichier de configuration pour les comptes courriel et twitter se trouve à `app/src/fichier/dest_courriel.yaml`. Vous devriez modifier les valeurs de `compte_twitter` et `courriel_envoyant` avant de démarrer l'application.
 
 ## Dépendances
 

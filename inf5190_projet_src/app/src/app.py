@@ -2,11 +2,10 @@
 from flask import Flask
 from flask import g
 from flask import request
-from flask import redirect
 from flask.helpers import make_response
 from flask.json import jsonify
 from flask.templating import render_template
-from itsdangerous import BadSignature
+from itsdangerous import BadSignature, SignatureExpired
 from flask_json_schema import JsonSchema
 from flask_json_schema import JsonValidationError
 
@@ -46,15 +45,10 @@ def get_db():
     return g._database
 
 
-@app.before_first_request
 def initialiser_planificateur():
     """
     Initialise le planificateur qui s'occupe des opérations planifiées.
     """
-    # décommentez pour faire un téléchargement immédiatement
-    #  après la première requête
-    # planificateur = Planificateur(get_db(), 5)
-    # décommentez pour changer l'heure de téléchargement à 1 fois / 24h
     planificateur = Planificateur(get_db())
     planificateur.run()
 
@@ -172,6 +166,8 @@ def supprimer_profil(token):
         return jsonify(ose.args), 500
     except BadSignature or ValueError as err:
         return jsonify(err.args), 400
+    except SignatureExpired as se:
+        return jsonify(se.args), 404
 
     return make_response(jsonify("Profil supprimé avec succès"), 200)
 
@@ -179,7 +175,7 @@ def supprimer_profil(token):
 @app.errorhandler(JsonValidationError)
 def validation(erreur):
     erreurs = [err.message for err in erreur.errors]
-    return jsonify({"erreur": erreur.message, "erreurs": erreurs})
+    return jsonify(erreurs)
 
 
 @app.errorhandler(400)
@@ -196,6 +192,9 @@ def erreur_handler(erreur):
 
 def main():
     creer_app()
+    with app.app_context():
+        initialiser_planificateur()
+
     app.run(host="0.0.0.0", port=5000)
 
 

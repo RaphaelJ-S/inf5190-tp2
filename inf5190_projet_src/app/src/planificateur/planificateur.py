@@ -41,14 +41,14 @@ class Planificateur:
         """
         Commence le BackgroundScheduler avec un travail exécuté selon
         la variable d'instance 'frequence'.
-        Si elle est None, le travail sera exécuté à minuit, une fois par jours,
-        sinon il sera exécuté une seule fois, après la première requête.
+        Le même travail s'exécute en parallèle une fois après la première
+        requête et l'autre fois à minuit chaque jours.
+
         """
-        self.travail.add_job(
-            self.lireSites, 'cron', hour=0
-        ) if self.frequence is None else self.travail.add_job(
-            self.lireSites, 'date'
-        )
+        # travail effectué une seule fois après la première requête
+        self.travail.add_job(self.lireSites, 'date')
+        # travail répété à minuit
+        self.travail.add_job(self.lireSites, 'cron', hour=0)
 
         self.travail.start()
         atexit.register(lambda: self.travail.shutdown())
@@ -71,5 +71,6 @@ class Planificateur:
         maj = MAJ(service)
         changements = maj.trouver_diff_installations(nv_donnees)
         liste_nom_table = maj.effectuer_changements(changements)
-        # Commentez la prochaine si vous voulez que le planificateur effectue toujours une vérification des données.
+        # Commentez la prochaine si vous voulez que le planificateur
+        # effectue toujours une vérification des données.
         self.db.maj_date_sources(liste_nom_table)

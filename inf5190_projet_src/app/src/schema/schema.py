@@ -12,7 +12,7 @@ nv_profil_schema = {
             "description": "Courriel de l'utilisateur",
             "type": "string",
             "format": "email",
-            "pattern": "^[a-zA-Z0-9]+@[A-Za-z0-9]+\.[a-zA-Z]+$",
+            "pattern": "^[a-zA-Z0-9]+@[A-Za-z0-9]+\\.[a-zA-Z]+$",
         },
         "liste_arr": {
             "type": "array",
